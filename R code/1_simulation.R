@@ -160,8 +160,8 @@ hist_sim<-function(data,s_n){
   
   data_hist=as.data.frame(cbind(T=data$T,P=(data$T)*data$P_1+(1-data$T)*data$P_0))
   
-  setwd("C:/Users/dafne/Desktop/plot temporanei/princ_strata/CA")
-  pdf(file=paste0("sim_P_",s_n,".pdf"),width=8, height=6)
+  #setwd("C:/Users/dafne/Desktop/plot temporanei/princ_strata/CA")
+  #pdf(file=paste0("sim_P_",s_n,".pdf"),width=8, height=6)
   g<-ggplot(data_hist, aes(P, fill=as.factor(T))) + 
     geom_histogram(alpha = 0.4, position="identity")+
     scale_fill_manual(name = "Treatment \n level",
@@ -173,7 +173,7 @@ hist_sim<-function(data,s_n){
     labs(x = "Post-Treatment Var.",y = " ")+
     ggtitle(paste0("Scenario ",s_n))
   print(g)
-  dev.off()
+  #dev.off()
 }
 
 hist_sim(data=scenario_1[[1]]$data,s_n=1)
@@ -189,8 +189,8 @@ hist_sim_Y<-function(data,s_n){
   
   data_hist=as.data.frame(cbind(T=data$T,Y=(data$T)*data$Y_1+(1-data$T)*data$Y_0))
   
-  setwd("C:/Users/dafne/Desktop/plot temporanei/princ_strata/CA")
-  pdf(file=paste0("sim_Y_",s_n,".pdf"),width=8, height=6)
+  #setwd("C:/Users/dafne/Desktop/plot temporanei/princ_strata/CA")
+  #pdf(file=paste0("sim_Y_",s_n,".pdf"),width=8, height=6)
   g<-ggplot(data_hist, aes(Y, fill=as.factor(T))) + 
     geom_histogram(alpha = 0.4, position="identity")+
     scale_fill_manual(name = "Treatment \n level",
@@ -202,7 +202,7 @@ hist_sim_Y<-function(data,s_n){
     labs(x = "Outcome Var.",y = " ")+
     ggtitle(paste0("Scenario ",s_n))
   print(g)
-  dev.off()
+  #dev.off()
 }
 
 hist_sim_Y(data=scenario_1[[1]]$data,s_n=1)
@@ -222,8 +222,8 @@ hist_sim_Y_cl<-function(data,s_n){
                                 C=(data$data$T)*data$clusters_all[,1]*4+
                                   (1-data$data$T)*data$clusters_all[,1]))
   
-  setwd("C:/Users/dafne/Desktop/plot temporanei/princ_strata/CA")
-  pdf(file=paste0("sim_Y_cl_",s_n,".pdf"),width=8, height=6)
+  #setwd("C:/Users/dafne/Desktop/plot temporanei/princ_strata/CA")
+  #pdf(file=paste0("sim_Y_cl_",s_n,".pdf"),width=8, height=6)
   g<-ggplot(data_hist, aes(Y, fill=as.factor(C))) + 
     geom_histogram(alpha = 0.4, position="identity")+
     scale_fill_manual(name = "Treatment \n - cluster",
@@ -235,7 +235,7 @@ hist_sim_Y_cl<-function(data,s_n){
     labs(x = "Outcome Var.",y = " ")+
     ggtitle(paste0("Scenario ",s_n))
   print(g)
-  dev.off()
+  #dev.off()
 }
 
 hist_sim_Y_cl2<-function(data,s_n){
@@ -246,8 +246,7 @@ hist_sim_Y_cl2<-function(data,s_n){
                                 C=(data$data$T)*data$clusters_all[,1]*4+
                                   (1-data$data$T)*data$clusters_all[,1]))
   
-  setwd("C:/Users/dafne/Desktop/plot temporanei/princ_strata/CA")
-  pdf(file=paste0("sim_Y_cl_",s_n,".pdf"),width=8, height=6)
+  #pdf(file=paste0("sim_Y_cl_",s_n,".pdf"),width=8, height=6)
   g<-ggplot(data_hist, aes(Y, fill=as.factor(C))) + 
     geom_histogram(alpha = 0.4, position="identity")+
     scale_fill_manual(name = "Treatment \n - cluster",
@@ -259,7 +258,7 @@ hist_sim_Y_cl2<-function(data,s_n){
     labs(x = "Outcome Var.",y = " ")+
     ggtitle(paste0("Scenario ",s_n))
   print(g)
-  dev.off()
+  #dev.off()
 }
 
 hist_sim_Y_cl3<-function(data,s_n){
@@ -270,8 +269,7 @@ hist_sim_Y_cl3<-function(data,s_n){
                                 C=(data$data$T)*data$clusters_all[,2]*4+
                                   (1-data$data$T)*data$clusters_all[,2]))
   
-  setwd("C:/Users/dafne/Desktop/plot temporanei/princ_strata/CA")
-  pdf(file=paste0("sim_Y_cl_",s_n,".pdf"),width=8, height=6)
+  #pdf(file=paste0("sim_Y_cl_",s_n,".pdf"),width=8, height=6)
   g<-ggplot(data_hist, aes(Y, fill=as.factor(C))) + 
     geom_histogram(alpha = 0.4, position="identity")+
     scale_fill_manual(name = "Treatment \n - cluster",
@@ -283,7 +281,7 @@ hist_sim_Y_cl3<-function(data,s_n){
     labs(x = "Outcome Var.",y = " ")+
     ggtitle(paste0("Scenario ",s_n))
   print(g)
-  dev.off()
+  #dev.off()
 }
 
 hist_sim_Y_cl(data=sim1[[1]],s_n=1)
@@ -331,10 +329,9 @@ boxplot_P<-function(data_frame,sim_n){
     coord_cartesian(xlim = c(-2, 2)) +
   ggtitle("P(1)-P(0)|stratum")
   
-  setwd("C:/Users/dafne/Desktop/plot temporanei/princ_strata/CA")
-  pdf(file=paste0(sim_n, "_P.pdf"),width=10, height=5)
+  #pdf(file=paste0(sim_n, "_P.pdf"),width=10, height=5)
   print(bp)
-  dev.off()
+  #dev.off()
   
 }
 
@@ -348,18 +345,6 @@ data_frame$cl=factor(data_frame$cl, levels=c("0", "+1"))
 
 cbPalette <- c("#F0D400", "#D90224")
 boxplot_P(data_frame,sim_n=1)
-
-data_frame=as.data.frame(cbind(P=scenario_2[[1]]$data$P_1-scenario_2[[1]]$data$P_0,
-                               cl=c(scenario_2[[1]]$clusters$S_groups)))
-data_frame$P=as.numeric(data_frame$P)
-data_frame$cl=as.character(data_frame$cl)
-data_frame$cl[data_frame$cl==24]="0"
-data_frame$cl[data_frame$cl==21]="+1"
-data_frame$cl[data_frame$cl==12]="+1."
-data_frame$cl=factor(data_frame$cl, levels=c("0", "+1", "+1."))
-
-cbPalette <- c("#F0D400", "#D90224", "#D90224")
-boxplot_P(data_frame,sim_n=2)
 
 data_frame=as.data.frame(cbind(P=scenario_3[[1]]$data$P_1-scenario_3[[1]]$data$P_0,
                                cl=c(scenario_3[[1]]$clusters$S_groups)))
@@ -423,10 +408,9 @@ boxplot_Y<-function(data_frame,sim_n){
     #coord_cartesian(xlim = c(-2, 2)) +
     ggtitle("Y(1)-Y(0)|stratum")
   
-  setwd("C:/Users/dafne/Desktop/plot temporanei/princ_strata/CA")
-  pdf(file=paste0(sim_n, "_Y.pdf"),width=10, height=5)
+  #pdf(file=paste0(sim_n, "_Y.pdf"),width=10, height=5)
   print(bp)
-  dev.off()
+  #dev.off()
   
 }
 
