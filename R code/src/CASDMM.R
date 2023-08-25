@@ -392,9 +392,6 @@ Gibbs_CASDMM<-function(c,sim){
       Y_1_imp=rnorm(n,cbind(1,P_1_r,P_0_r,P_0_r*P_1_r)%*%t(t(theta_1)),
                     exp(lambda[1]+lambda[2]*P_1_r))
       
-      #P_0_r[T0]=P_imp[T0]
-      #P_1_r[T1]=P_imp[T1]
-      
       # --- save informations ----
       # parameters
       post_eta[,r-R_burnin]=eta
@@ -427,7 +424,7 @@ Gibbs_CASDMM<-function(c,sim){
   print(paste0("sample n ",c))
   
   return(list(#post_eta=post_eta, post_var=post_var,
-    #post_beta=post_beta,
+    #chains_theta=post_theta,
     S_all_cluster=S_all_cluster, S_strata_cluster=S_strata_cluster,
     post_theta=apply(post_theta,1,mean), 
     post_lambda=apply(post_lambda,1,mean),
