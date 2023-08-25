@@ -47,10 +47,10 @@ scenario_2=lapply(1:samples, function(s)
 # case 1 with closer strata and different variance
 scenario_3=lapply(1:samples, function(s) 
   prova=setup_sim_2cov(seed=s,
-                       eta=c(1.5,2,2.75),
+                       eta=c(1.5,2,2.5),
                        sigma_p=c(0.2,0.1,0.15),
-                       allocation_0=c(1,2,3),
-                       allocation_1=c(2,3,3),
+                       allocation_0=c(1,2,2),
+                       allocation_1=c(1,3,3),
                        beta_0=c(1,2),
                        beta_1=c(1,2,-1,1.5),
                        sigma_y=c(-0.5,0.1)))
