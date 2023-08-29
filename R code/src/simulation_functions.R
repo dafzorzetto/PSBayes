@@ -49,7 +49,7 @@ setup_sim_2cov<- function(seed,                        # sed seed for riproducib
   S_strata=1*(eta[S_cl_1]==eta[S_cl_0])+2*(eta[S_cl_1]>eta[S_cl_0])
   
   return(list(data=list(X=X,T=T,P_0=P[1,],P_1=P[2,],Y_0=Y[,1],Y_1=Y[,2]), 
-              par_P=cbind(eta=eta, sigma_p=sigma_p, 
+              par_P=list(eta=eta, sigma_p=sigma_p, 
                           allocation_0=allocation_0, allocation_1=allocation_1),
               par_Y=list(beta_0=beta_0, beta_1=beta_1, sigma_y=sigma_y),
               clusters=list(S_groups=S_groups,S_strata=S_strata)))
@@ -95,11 +95,11 @@ setup_sim_5cov<- function(seed,                        # sed seed for riproducib
                 exp(sigma_y[1]+sigma_y[2]*P[2,])))
   
   # saving groups and strata allocation
-  S_groups=S_cl_1*(S_cl_0+5)
+  S_groups=S_cl_1*(S_cl_0+10)
   S_strata=1*(eta[S_cl_1]==eta[S_cl_0])+2*(eta[S_cl_1]>eta[S_cl_0])
   
   return(list(data=list(X=X,T=T,P_0=P[1,],P_1=P[2,],Y_0=Y[,1],Y_1=Y[,2]), 
-              par_P=cbind(eta=eta, sigma_p=sigma_p, 
+              par_P=list(eta=eta, sigma_p=sigma_p, 
                           allocation_0=allocation_0, allocation_1=allocation_1),
               par_Y=list(beta_0=beta_0, beta_1=beta_1, sigma_y=sigma_y),
               clusters=list(S_groups=S_groups,S_strata=S_strata)))
