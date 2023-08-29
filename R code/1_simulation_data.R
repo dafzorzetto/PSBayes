@@ -4,12 +4,9 @@
 # ---         PRINCIPAL STRATIFICATION          ---
 ###################################################################################
 
-#library
-#library(ggplot2)
-#library(ggExtra)
-
 # upload functions
 source("src/simulation_functions.R")
+source("src/plot_simulation.R")
 
 ###################################################################################
 
@@ -29,7 +26,7 @@ scenario_1=lapply(1:samples, function(s)
                        allocation_0=c(1,2,2),
                        allocation_1=c(1,3,3),
                        beta_0=c(1,2),
-                       beta_1=c(1,2,-1,1.5),
+                       beta_1=c(1,2,-1,0.5),
                        sigma_y=c(-0.5,0.1)))
 
 # 2 confounders
@@ -48,7 +45,7 @@ scenario_2=lapply(1:samples, function(s)
 scenario_3=lapply(1:samples, function(s) 
   prova=setup_sim_2cov(seed=s,
                        eta=c(1.5,2,2.5),
-                       sigma_p=c(0.2,0.1,0.15),
+                       sigma_p=c(0.12,0.1,0.15),
                        allocation_0=c(1,2,2),
                        allocation_1=c(1,3,3),
                        beta_0=c(1,2),
@@ -69,14 +66,47 @@ scenario_4=lapply(1:samples, function(s)
 # case 2 with 5 covariates
 scenario_5=lapply(1:samples, function(s) 
   prova=setup_sim_5cov(seed=s,
-                       eta=c(1,2,3),
-                       sigma_p=rep(0.05,3),
-                       allocation_0=c(2,2,2),
-                       allocation_1=c(1,2,3),
+                       eta=c(1,2,3,4),
+                       sigma_p=rep(0.05,4),
+                       allocation_0=c(2,2,3),
+                       allocation_1=c(1,2,4),
                        beta_0=c(1,2),
-                       beta_1=c(1,2,-1,1.5),
+                       beta_1=c(1,1.2,-1,0.5),
                        sigma_y=c(-0.5,0.1)))
 
 
 save.image("data_simulations.RData")
+
+###################################################################################
+# ---     plots: histograms of post-treatment or outcome distributions     ---
+###################################################################################
+
+# POST_TREATMENT variable: divider by treatment level
+hist_P_sim(data=scenario_1[[1]],s_n=1)
+hist_P_sim(data=scenario_2[[1]],s_n=2)
+hist_P_sim(data=scenario_3[[1]],s_n=3)
+hist_P_sim(data=scenario_4[[1]],s_n=4)
+hist_P_sim(data=scenario_5[[1]],s_n=5)
+
+# POST_TREATMENT variable: divider by treatment level
+hist_diff_P_sim(data=scenario_1[[1]],s_n=1)
+hist_diff_P_sim(data=scenario_2[[1]],s_n=2)
+hist_diff_P_sim(data=scenario_3[[1]],s_n=3)
+hist_diff_P_sim(data=scenario_4[[1]],s_n=4)
+hist_diff_P_sim(data=scenario_5[[1]],s_n=5)
+
+# OUTCOME variable: divider by treatment level
+hist_Y_sim(data=scenario_1[[1]],s_n=1)
+hist_Y_sim(data=scenario_2[[1]],s_n=2)
+hist_Y_sim(data=scenario_3[[1]],s_n=3)
+hist_Y_sim(data=scenario_4[[1]],s_n=4)
+hist_Y_sim(data=scenario_5[[1]],s_n=5)
+
+# POST_TREATMENT variable: divider by treatment level
+hist_diff_Y_sim(data=scenario_1[[1]],s_n=1)
+hist_diff_Y_sim(data=scenario_2[[1]],s_n=2)
+hist_diff_Y_sim(data=scenario_3[[1]],s_n=3)
+hist_diff_Y_sim(data=scenario_4[[1]],s_n=4)
+hist_diff_Y_sim(data=scenario_5[[1]],s_n=5)
+
 
