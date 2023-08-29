@@ -26,18 +26,23 @@ xtable(ARI, digits=4)
 
 cbPalette <- c("#007399")   #, "#00ace6", "#80dfff")
 
-bias_P_boxplot=as.data.frame(cbind(Xi=c(apply(bias_P_CASDMM1,2,mean),
-                                        apply(bias_P_CASDMM2,2,mean),
-                                        apply(bias_P_CASDMM3,2,mean),
-                                        apply(bias_P_CASDMM4,2,mean),
-                                        apply(bias_P_CASDMM5,2,mean)),
+bias_P=a<-matrix(c(apply(bias_P_CASDMM1,2,mean),
+                   apply(bias_P_CASDMM2,2,mean),
+                   apply(bias_P_CASDMM3,2,mean),
+                   apply(bias_P_CASDMM4,2,mean),
+                   apply(bias_P_CASDMM5,2,mean)),ncol=5)
+
+round(apply(bias_P,2,mean), 4)
+round(apply(bias_P,2,sd), 4)
+
+bias_P_boxplot=as.data.frame(cbind(Xi=c(bias_P),
                                  Q=(rep(rep("CASDMM",samples),5)),
                                  cov=paste0("scenario ",rep(1:5,each=samples))))
 bias_P_boxplot$cov=as.character(bias_P_boxplot$cov)
 bias_P_boxplot$Q=as.character(bias_P_boxplot$Q)
 bias_P_boxplot$Xi=as.numeric(bias_P_boxplot$Xi)
 
-#pdf(file="bias_P_sim.pdf",width=10, height=5)
+pdf(file="bias_P_sim.pdf",width=10, height=5)
 ggplot(bias_P_boxplot, aes(x=cov, y=Xi, fill=Q)) + 
   scale_fill_manual(values=cbPalette, name="")+
   geom_boxplot(lwd=0.3,fatten = 1.5, outlier.size = 0.3)+
@@ -53,7 +58,7 @@ ggplot(bias_P_boxplot, aes(x=cov, y=Xi, fill=Q)) +
         panel.grid.major = element_line(color = "grey",size = 0.1))+
   ylab("Bias Post-Treatment") +
   xlab("")
-#dev.off()
+dev.off()
 
 cbPalette <- c("#80dfff")   #, "#00ace6", "#80dfff")
 
@@ -68,7 +73,7 @@ mse_P_boxplot$cov=as.character(mse_P_boxplot$cov)
 mse_P_boxplot$Q=as.character(mse_P_boxplot$Q)
 mse_P_boxplot$Xi=as.numeric(mse_P_boxplot$Xi)
 
-#pdf(file="mse_P_sim.pdf",width=10, height=5)
+pdf(file="mse_P_sim.pdf",width=10, height=5)
 ggplot(mse_P_boxplot, aes(x=cov, y=Xi, fill=Q)) + 
   scale_fill_manual(values=cbPalette, name="")+
   geom_boxplot(lwd=0.3,fatten = 1.5, outlier.size = 0.3)+
@@ -83,25 +88,30 @@ ggplot(mse_P_boxplot, aes(x=cov, y=Xi, fill=Q)) +
         panel.grid.major = element_line(color = "grey",size = 0.1))+
   ylab("MSE Post-Treatment") +
   xlab("")
-#dev.off()
+dev.off()
 
 
 # --- Boxplots for Y: outcome ----
 
 cbPalette <- c("#007399")   #, "#00ace6", "#80dfff")
 
-bias_Y_boxplot=as.data.frame(cbind(Xi=c(apply(bias_Y_CASDMM1,2,mean),
-                                        apply(bias_Y_CASDMM2,2,mean),
-                                        apply(bias_Y_CASDMM3,2,mean),
-                                        apply(bias_Y_CASDMM4,2,mean),
-                                        apply(bias_Y_CASDMM5,2,mean)),
+bias_Y=matrix(c(apply(bias_Y_CASDMM1,2,mean),
+                apply(bias_Y_CASDMM2,2,mean),
+                apply(bias_Y_CASDMM3,2,mean),
+                apply(bias_Y_CASDMM4,2,mean),
+                apply(bias_Y_CASDMM5,2,mean)), ncol=5)
+
+round(apply(bias_Y,2,mean), 4)
+round(apply(bias_Y,2,sd), 4)
+
+bias_Y_boxplot=as.data.frame(cbind(Xi=c(bias_Y),
                                    Q=(rep(rep("CASDMM",samples),5)),
                                    cov=paste0("scenario ",rep(1:5,each=samples))))
 bias_Y_boxplot$cov=as.character(bias_Y_boxplot$cov)
 bias_Y_boxplot$Q=as.character(bias_Y_boxplot$Q)
 bias_Y_boxplot$Xi=as.numeric(bias_Y_boxplot$Xi)
 
-#pdf(file="bias_Y_sim.pdf",width=10, height=5)
+pdf(file="bias_Y_sim.pdf",width=10, height=5)
 ggplot(bias_Y_boxplot, aes(x=cov, y=Xi, fill=Q)) + 
   scale_fill_manual(values=cbPalette, name="")+
   geom_boxplot(lwd=0.3,fatten = 1.5, outlier.size = 0.3)+
@@ -117,7 +127,7 @@ ggplot(bias_Y_boxplot, aes(x=cov, y=Xi, fill=Q)) +
         panel.grid.major = element_line(color = "grey",size = 0.1))+
   ylab("Bias Outcome") +
   xlab("")
-#dev.off()
+dev.off()
 
 cbPalette <- c("#80dfff")   #, "#00ace6", "#80dfff")
 
@@ -132,7 +142,7 @@ mse_Y_boxplot$cov=as.character(mse_Y_boxplot$cov)
 mse_Y_boxplot$Q=as.character(mse_Y_boxplot$Q)
 mse_Y_boxplot$Xi=as.numeric(mse_Y_boxplot$Xi)
 
-#pdf(file="bias_Y_sim.pdf",width=10, height=5)
+pdf(file="bias_Y_sim.pdf",width=10, height=5)
 ggplot(mse_Y_boxplot, aes(x=cov, y=Xi, fill=Q)) + 
   scale_fill_manual(values=cbPalette, name="")+
   geom_boxplot(lwd=0.3,fatten = 1.5, outlier.size = 0.3)+
@@ -147,4 +157,5 @@ ggplot(mse_Y_boxplot, aes(x=cov, y=Xi, fill=Q)) +
         panel.grid.major = element_line(color = "grey",size = 0.1))+
   ylab("MSE Outcome") +
   xlab("")
-#dev.off()
+dev.off()
+
