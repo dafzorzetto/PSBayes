@@ -1,6 +1,6 @@
 # Data Resource
- - *https://wonder.cdc.gov/mcd-icd10.html* for information on mortality rate
- - paper Zigler
+ - *Center for Disease Control and Prevention*: *https://wonder.cdc.gov/mcd-icd10.html* for information on different causes of mortality 
+ - paper Zigler : ADD REFERENCE PAPER AND HOW TO DOWNLOAD DATASET for level of $PM_{2.5}$ and air pollution regolation
 
 ### How to download the data from *Center for Disease Control and Prevention*
 Google *https://wonder.cdc.gov/mcd-icd10.html*, agree terms of data use, and this page apare
