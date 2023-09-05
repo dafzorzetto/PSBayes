@@ -3,5 +3,7 @@
  - paper Zigler
 
 ### How to download the data from *Center for Disease Control and Prevention*
- 1- google *https://wonder.cdc.gov/mcd-icd10.html*
- 2- 
+ - google *https://wonder.cdc.gov/mcd-icd10.html*, agree terms of data use, and this page apare
+![Screenshot](screenshot.png)
+   
+ -   
