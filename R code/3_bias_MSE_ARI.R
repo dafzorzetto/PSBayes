@@ -19,6 +19,12 @@ clusters_strata_3=lapply(1:samples,function(c) as.vector(table(CASDMM_3[[c]]$S_s
 clusters_strata_4=lapply(1:samples,function(c) as.vector(table(CASDMM_4[[c]]$S_strata_cluster)))
 clusters_strata_5=lapply(1:samples,function(c) as.vector(table(CASDMM_5[[c]]$S_strata_cluster)))
 
+table(sapply(1:samples, function(c) length(clusters_strata_1[[c]])))
+table(sapply(1:samples, function(c) length(clusters_strata_2[[c]])))
+table(sapply(1:samples, function(c) length(clusters_strata_3[[c]])))
+table(sapply(1:samples, function(c) length(clusters_strata_4[[c]])))
+table(sapply(1:samples, function(c) length(clusters_strata_5[[c]])))
+
 # --- adjasted RAND index (ARI) ---
 
 ARI_1_CASDMM<-sapply(1:samples, function(c)

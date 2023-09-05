@@ -142,7 +142,7 @@ mse_Y_boxplot$cov=as.character(mse_Y_boxplot$cov)
 mse_Y_boxplot$Q=as.character(mse_Y_boxplot$Q)
 mse_Y_boxplot$Xi=as.numeric(mse_Y_boxplot$Xi)
 
-pdf(file="bias_Y_sim.pdf",width=10, height=5)
+pdf(file="mse_Y_sim.pdf",width=10, height=5)
 ggplot(mse_Y_boxplot, aes(x=cov, y=Xi, fill=Q)) + 
   scale_fill_manual(values=cbPalette, name="")+
   geom_boxplot(lwd=0.3,fatten = 1.5, outlier.size = 0.3)+

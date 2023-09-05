@@ -38,29 +38,29 @@ scenario_2=lapply(1:samples, function(s)
                        allocation_0=c(2,2,2),
                        allocation_1=c(1,2,3),
                        beta_0=c(1,2),
-                       beta_1=c(1,2,-1,1.5),
+                       beta_1=c(1,1.2,-1,1),
                        sigma_y=c(-0.5,0.1)))
 
 # case 1 with closer strata and different variance
 scenario_3=lapply(1:samples, function(s) 
   prova=setup_sim_2cov(seed=s,
                        eta=c(1.5,2,2.5),
-                       sigma_p=c(0.12,0.1,0.15),
+                       sigma_p=c(0.12,0.1,0.08),
                        allocation_0=c(1,2,2),
                        allocation_1=c(1,3,3),
                        beta_0=c(1,2),
-                       beta_1=c(1,2,-1,1.5),
+                       beta_1=c(1,1.2,-0.8,0.5),
                        sigma_y=c(-0.5,0.1)))
 
 # case 2 with closer strata and different variance
 scenario_4=lapply(1:samples, function(s) 
   prova=setup_sim_2cov(seed=s,
                        eta=c(1.5,2,2.5),
-                       sigma_p=c(0.2,0.1,0.15),
+                       sigma_p=c(0.12,0.1,0.08),
                        allocation_0=c(2,2,2),
                        allocation_1=c(1,2,3),
                        beta_0=c(1,2),
-                       beta_1=c(1,2,-1,1.5),
+                       beta_1=c(1,1.2,-0.8,0.5),
                        sigma_y=c(-0.5,0.1)))
 
 # case 2 with 5 covariates

@@ -44,21 +44,20 @@ Gibbs_CASDMM<-function(c,sim){
   
   
   # preparing vector for P imputation
-  P_mis=rep(0,n)
-  #P_imp=rep(0,n)
+  P_mis=rep(mean(P_obs),n)
   
   # preparing vector for Y imputation
-  Y_0_imp=rep(0,n)
-  Y_1_imp=rep(0,n)
+  Y_0_imp=rep(mean(Y_obs_0),n)
+  Y_1_imp=rep(mean(Y_obs_1),n)
   
   # ------   hyperparameters   -----
   # for P-model
-  p_beta=c(0,5)                 # mean and variance of normal distribution for beta param.
+  p_beta=c(-0.5,20)                 # mean and variance of normal distribution for beta param.
   p_sigma=c(2,0.5)              # shape parameters of inv-gamma for sigma param.
-  p_eta=c(0,5)                  # mean and variance of normal distribution for eta param.
+  p_eta=c(0,20)                  # mean and variance of normal distribution for eta param.
   # for Y-mode
-  p_theta=c(0,5)                # mean and variance of normal distribution for theta param.
-  p_lambda=c(0,2,0,1)           # mean and variance of normal distribution for lambda param.
+  p_theta=c(0,10)                # mean and variance of normal distribution for theta param.
+  p_lambda=c(0,2,0,2)           # mean and variance of normal distribution for lambda param.
   
   # ------   initialitation   -----
   # parameters
@@ -68,7 +67,7 @@ Gibbs_CASDMM<-function(c,sim){
   eta=seq(-3,-3+0.5*(n_cluster-1),0.5)
   theta_0=rep(0.1,2)
   theta_1=rep(0.1,4)
-  lambda=rep(1,2)
+  lambda=rep(0.1,2)
   # cluster allocatio variables 
   xi_0=sample(1:n_cluster,n0,replace=TRUE)
   xi_1=sample(1:n_cluster,n1,replace=TRUE)
@@ -412,7 +411,7 @@ Gibbs_CASDMM<-function(c,sim){
     }
     
     #print(r)
-    if (r%%500==0) print(r)
+    if (r%%500==0) print(paste0(r,"/",R," iterations"))
   }
   
   # -----   point estimation partition   -----
@@ -421,7 +420,7 @@ Gibbs_CASDMM<-function(c,sim){
   # partition: strata allocation
   S_strata_cluster=partition_strata_cluster(xi_0=cluster_allocation_0,xi_1=cluster_allocation_1, eta=post_eta)
   
-  print(paste0("sample n ",c))
+  print(paste0("sample ",c, " done"))
   
   return(list(#post_eta=post_eta, post_var=post_var,
     #chains_theta=post_theta,

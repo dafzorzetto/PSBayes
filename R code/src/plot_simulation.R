@@ -19,7 +19,6 @@ hist_P_sim<-function(data,s_n){
                                 P=(data$data$T)*data$data$P_1+
                                   (1-data$data$T)*data$data$P_0))
   
-  #setwd("C:/Users/dafne/Desktop/plot temporanei/princ_strata/CA")
   #pdf(file=paste0("sim_P_",s_n,".pdf"),width=8, height=6)
   g<-ggplot(data_hist, aes(P, fill=as.factor(T))) + 
     geom_histogram(alpha = 0.4, position="identity")+
@@ -42,7 +41,6 @@ hist_diff_P_sim<-function(data,s_n){
   data_hist=as.data.frame(cbind(T=data$data$T,
                                 P=data$data$P_1-data$data$P_0))
   
-  #setwd("C:/Users/dafne/Desktop/plot temporanei/princ_strata/CA")
   #pdf(file=paste0("sim_P_",s_n,".pdf"),width=8, height=6)
   g<-ggplot(data_hist, aes(P)) + 
     geom_histogram(alpha = 0.4, position="identity", fill="#56B4E9")+
