@@ -5,7 +5,9 @@
 ### How to download the data from *Center for Disease Control and Prevention*
 Google *https://wonder.cdc.gov/mcd-icd10.html*, agree terms of data use, and this page apare
 
-![Screenshot](data_PS.png)
+<center>
+<img src="data_PS.png" width="500" >
+</center>
 
  Follow this indications:
  - in **`1. Organize table layout`**: modify
