@@ -42,7 +42,6 @@ Gibbs_CASDMM<-function(c,sim){
   P_obs_0=P_obs[T0]
   Y_obs_0=Y_obs[T0]
   
-  
   # preparing vector for P imputation
   P_mis=rep(mean(P_obs),n)
   
@@ -55,7 +54,7 @@ Gibbs_CASDMM<-function(c,sim){
   p_beta=c(-0.5,20)                 # mean and variance of normal distribution for beta param.
   p_sigma=c(2,0.5)              # shape parameters of inv-gamma for sigma param.
   p_eta=c(0,20)                  # mean and variance of normal distribution for eta param.
-  # for Y-mode
+  # for Y-model
   p_theta=c(0,10)                # mean and variance of normal distribution for theta param.
   p_lambda=c(0,2,0,2)           # mean and variance of normal distribution for lambda param.
   
