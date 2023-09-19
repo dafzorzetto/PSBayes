@@ -51,6 +51,7 @@ round(ARI,4)
 
 # --- bias and MSE for P: post-treatment ---
 
+# CASBAH
 bias_P_CASDMM1=sapply(1:samples, function(c) 
   CASDMM_1[[c]]$post_P_1_imp-CASDMM_1[[c]]$post_P_0_imp-scenario_1[[c]]$data$P_1+scenario_1[[c]]$data$P_0)
 bias_P_CASDMM2=sapply(1:samples, function(c) 
@@ -73,10 +74,35 @@ mse_P_CASDMM4=sapply(1:samples, function(c)
 mse_P_CASDMM5=sapply(1:samples, function(c) 
   (CASDMM_5[[c]]$post_P_1_imp-CASDMM_5[[c]]$post_P_0_imp-scenario_5[[c]]$data$P_1+scenario_5[[c]]$data$P_0)^2)
 
+# Schartz Li Mealli model
+
+bias_P_SLM1=sapply(1:samples, function(c) 
+  SLM_1[[c]]$post_P_1_imp-SLM_1[[c]]$post_P_0_imp-scenario_1[[c]]$data$P_1+scenario_1[[c]]$data$P_0)
+bias_P_SLM2=sapply(1:samples, function(c) 
+  SLM_2[[c]]$post_P_1_imp-SLM_2[[c]]$post_P_0_imp-scenario_2[[c]]$data$P_1+scenario_2[[c]]$data$P_0)
+bias_P_SLM3=sapply(1:samples, function(c) 
+  SLM_3[[c]]$post_P_1_imp-SLM_3[[c]]$post_P_0_imp-scenario_3[[c]]$data$P_1+scenario_3[[c]]$data$P_0)
+bias_P_SLM4=sapply(1:samples, function(c) 
+  SLM_4[[c]]$post_P_1_imp-SLM_4[[c]]$post_P_0_imp-scenario_4[[c]]$data$P_1+scenario_4[[c]]$data$P_0)
+bias_P_SLM5=sapply(1:samples, function(c) 
+  SLM_5[[c]]$post_P_1_imp-SLM_5[[c]]$post_P_0_imp-scenario_5[[c]]$data$P_1+scenario_5[[c]]$data$P_0)
+
+mse_P_SLM1=sapply(1:samples, function(c) 
+  (SLM_1[[c]]$post_P_1_imp-SLM_1[[c]]$post_P_0_imp-scenario_1[[c]]$data$P_1+scenario_1[[c]]$data$P_0)^2)
+mse_P_SLM2=sapply(1:samples, function(c) 
+  (SLM_2[[c]]$post_P_1_imp-SLM_2[[c]]$post_P_0_imp-scenario_2[[c]]$data$P_1+scenario_2[[c]]$data$P_0)^2)
+mse_P_SLM3=sapply(1:samples, function(c) 
+  (SLM_3[[c]]$post_P_1_imp-SLM_3[[c]]$post_P_0_imp-scenario_3[[c]]$data$P_1+scenario_3[[c]]$data$P_0)^2)
+mse_P_SLM4=sapply(1:samples, function(c) 
+  (SLM_4[[c]]$post_P_1_imp-SLM_4[[c]]$post_P_0_imp-scenario_4[[c]]$data$P_1+scenario_4[[c]]$data$P_0)^2)
+mse_P_SLM5=sapply(1:samples, function(c) 
+  (SLM_5[[c]]$post_P_1_imp-SLM_5[[c]]$post_P_0_imp-scenario_5[[c]]$data$P_1+scenario_5[[c]]$data$P_0)^2)
+
 ###################################################################################
 
 # --- bias and MSE for Y: outcome ---
 
+# CASBAH
 bias_Y_CASDMM1=sapply(1:samples, function(c) 
   CASDMM_1[[c]]$post_Y_1_imp-CASDMM_1[[c]]$post_Y_0_imp-scenario_1[[c]]$data$Y_1+scenario_1[[c]]$data$Y_0)
 bias_Y_CASDMM2=sapply(1:samples, function(c) 
@@ -98,6 +124,29 @@ mse_Y_CASDMM4=sapply(1:samples, function(c)
   (CASDMM_4[[c]]$post_Y_1_imp-CASDMM_4[[c]]$post_Y_0_imp-scenario_4[[c]]$data$Y_1+scenario_4[[c]]$data$Y_0)^2)
 mse_Y_CASDMM5=sapply(1:samples, function(c) 
   (CASDMM_5[[c]]$post_Y_1_imp-CASDMM_5[[c]]$post_Y_0_imp-scenario_5[[c]]$data$Y_1+scenario_5[[c]]$data$Y_0)^2)
+
+# Schartz Li Mealli's model
+bias_Y_SLM1=sapply(1:samples, function(c) 
+  SLM_1[[c]]$post_Y_1_imp-SLM_1[[c]]$post_Y_0_imp-scenario_1[[c]]$data$Y_1+scenario_1[[c]]$data$Y_0)
+bias_Y_SLM2=sapply(1:samples, function(c) 
+  SLM_2[[c]]$post_Y_1_imp-SLM_2[[c]]$post_Y_0_imp-scenario_2[[c]]$data$Y_1+scenario_2[[c]]$data$Y_0)
+bias_Y_SLM3=sapply(1:samples, function(c) 
+  SLM_3[[c]]$post_Y_1_imp-SLM_3[[c]]$post_Y_0_imp-scenario_3[[c]]$data$Y_1+scenario_3[[c]]$data$Y_0)
+bias_Y_SLM4=sapply(1:samples, function(c) 
+  SLM_4[[c]]$post_Y_1_imp-SLM_4[[c]]$post_Y_0_imp-scenario_4[[c]]$data$Y_1+scenario_4[[c]]$data$Y_0)
+bias_Y_SLM5=sapply(1:samples, function(c) 
+  SLM_5[[c]]$post_Y_1_imp-SLM_5[[c]]$post_Y_0_imp-scenario_5[[c]]$data$Y_1+scenario_5[[c]]$data$Y_0)
+
+mse_Y_SLM1=sapply(1:samples, function(c) 
+  (SLM_1[[c]]$post_Y_1_imp-SLM_1[[c]]$post_Y_0_imp-scenario_1[[c]]$data$Y_1+scenario_1[[c]]$data$Y_0)^2)
+mse_Y_SLM2=sapply(1:samples, function(c) 
+  (SLM_2[[c]]$post_Y_1_imp-SLM_2[[c]]$post_Y_0_imp-scenario_2[[c]]$data$Y_1+scenario_2[[c]]$data$Y_0)^2)
+mse_Y_SLM3=sapply(1:samples, function(c) 
+  (SLM_3[[c]]$post_Y_1_imp-SLM_3[[c]]$post_Y_0_imp-scenario_3[[c]]$data$Y_1+scenario_3[[c]]$data$Y_0)^2)
+mse_Y_SLM4=sapply(1:samples, function(c) 
+  (SLM_4[[c]]$post_Y_1_imp-SLM_4[[c]]$post_Y_0_imp-scenario_4[[c]]$data$Y_1+scenario_4[[c]]$data$Y_0)^2)
+mse_Y_SLM5=sapply(1:samples, function(c) 
+  (SLM_5[[c]]$post_Y_1_imp-SLM_5[[c]]$post_Y_0_imp-scenario_5[[c]]$data$Y_1+scenario_5[[c]]$data$Y_0)^2)
 
 
 #########################################################################

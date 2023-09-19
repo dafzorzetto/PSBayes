@@ -11,7 +11,7 @@ library(MatchIt)
 library(tidyverse)
 
 # load dataset:
-load("C:/Users/dafne/Dropbox/DafneZorzetto/2_BNPCausal/2_PrincipalStratification/Data/final_dataset.RData")
+load("Dataset_merged.RData")
 
 ##############################################################
 # ---       preparing data     ----
@@ -20,8 +20,8 @@ load("C:/Users/dafne/Dropbox/DafneZorzetto/2_BNPCausal/2_PrincipalStratification
 # prepare data for matching
 data_temp <- data_merged %>% 
   select(a,                                          #treatment
-         pmbase2002_2004, pmfu, pm_diff,             # post-treatment
-         all_causes,                                 #outcome
+         pm_diff,                                    # post-treatment
+         all_causes_ADJ,                             #outcome
          PctUrban, PctBlack, PctHisp, PctHighSchool,
          MedianHHInc, PctPoor, PctFemale,
          PctOccupied, PctMovedIn5, MedianHValue,
@@ -29,7 +29,7 @@ data_temp <- data_merged %>%
          FIPS)
 data_temp_rnames <- row.names(data_temp)
 
-data_temp$all_causes=data_temp$all_causes/data_temp$Population
+#dicotomize the confounders
 data_temp$PctUrban=1*(data_temp$PctUrban>median(data_temp$PctUrban))
 data_temp$PctBlack=1*(data_temp$PctBlack>median(data_temp$PctBlack))
 data_temp$PctHisp=1*(data_temp$PctHisp>median(data_temp$PctHisp))
@@ -51,7 +51,7 @@ data_temp$Population=1*(data_temp$Population>median(data_temp$Population))
 # ---       matching      ----
 ##############################################################
 
-
+# propensity score
 m_temp <- matchit(a ~ PctUrban + PctBlack + PctHisp + PctHighSchool +
                   MedianHHInc + PctPoor + PctFemale +
                   PctOccupied + PctMovedIn5 + MedianHValue +
@@ -80,8 +80,8 @@ dev.off()
 ###########################################################################
 
 match_ <- get_matches(m_temp)
-dataset_matched <- match_[,c(4:24)]
+dataset_matched <- match_[,c(4:22)]
 
 #Save
-save(dataset_matched, file = "dataset_matched.RData")
+save(dataset_matched, file = "Dataset_matched.RData")
 

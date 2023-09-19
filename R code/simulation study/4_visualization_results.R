@@ -24,20 +24,21 @@ xtable(ARI, digits=4)
 
 # --- Boxplots for P: post-treatment ----
 
-cbPalette <- c("#007399")   #, "#00ace6", "#80dfff")
+cbPalette <- c("#007399", "#80dfff")   #, "#00ace6", "#80dfff")
 
-bias_P=a<-matrix(c(apply(bias_P_CASDMM1,2,mean),
-                   apply(bias_P_CASDMM2,2,mean),
-                   apply(bias_P_CASDMM3,2,mean),
-                   apply(bias_P_CASDMM4,2,mean),
-                   apply(bias_P_CASDMM5,2,mean)),ncol=5)
+bias_P=a<-matrix(c(apply(bias_P_CASDMM1,2,mean),apply(bias_P_SLM1,2,mean),
+                   apply(bias_P_CASDMM2,2,mean),apply(bias_P_SLM2,2,mean),
+                   apply(bias_P_CASDMM3,2,mean),apply(bias_P_SLM3,2,mean),
+                   apply(bias_P_CASDMM4,2,mean),apply(bias_P_SLM4,2,mean),
+                   apply(bias_P_CASDMM5,2,mean),apply(bias_P_SLM5,2,mean)),
+                 ncol=10)
 
-round(apply(bias_P,2,mean), 4)
-round(apply(bias_P,2,sd), 4)
+round(apply(bias_P,2,mean,na.rm = TRUE), 4)
+round(apply(bias_P,2,sd,na.rm = TRUE), 4)
 
 bias_P_boxplot=as.data.frame(cbind(Xi=c(bias_P),
-                                 Q=(rep(rep("CASDMM",samples),5)),
-                                 cov=paste0("scenario ",rep(1:5,each=samples))))
+                                 Q=(rep(c(rep("CASBAH",samples),rep("SLM",samples)),5)),
+                                 cov=paste0("scenario ",rep(1:5,each=samples*2))))
 bias_P_boxplot$cov=as.character(bias_P_boxplot$cov)
 bias_P_boxplot$Q=as.character(bias_P_boxplot$Q)
 bias_P_boxplot$Xi=as.numeric(bias_P_boxplot$Xi)
@@ -60,15 +61,15 @@ ggplot(bias_P_boxplot, aes(x=cov, y=Xi, fill=Q)) +
   xlab("")
 dev.off()
 
-cbPalette <- c("#80dfff")   #, "#00ace6", "#80dfff")
+#cbPalette <- c("#80dfff")   #, "#00ace6", "#80dfff")
 
-mse_P_boxplot=as.data.frame(cbind(Xi=c(apply(mse_P_CASDMM1,2,mean),
-                                        apply(mse_P_CASDMM2,2,mean),
-                                        apply(mse_P_CASDMM3,2,mean),
-                                        apply(mse_P_CASDMM4,2,mean),
-                                        apply(mse_P_CASDMM5,2,mean)),
-                                   Q=(rep(rep("CASDMM",samples),5)),
-                                   cov=paste0("scenario ",rep(1:5,each=samples))))
+mse_P_boxplot=as.data.frame(cbind(Xi=c(apply(mse_P_CASDMM1,2,mean),apply(mse_P_SLM1,2,mean),
+                                        apply(mse_P_CASDMM2,2,mean),apply(mse_P_SLM2,2,mean),
+                                        apply(mse_P_CASDMM3,2,mean),apply(mse_P_SLM3,2,mean),
+                                        apply(mse_P_CASDMM4,2,mean),apply(mse_P_SLM4,2,mean),
+                                        apply(mse_P_CASDMM5,2,mean),apply(mse_P_SLM5,2,mean)),
+                                  Q=(rep(c(rep("CASBAH",samples),rep("SLM",samples)),10)),
+                                  cov=paste0("scenario ",rep(1:5,each=samples*2))))
 mse_P_boxplot$cov=as.character(mse_P_boxplot$cov)
 mse_P_boxplot$Q=as.character(mse_P_boxplot$Q)
 mse_P_boxplot$Xi=as.numeric(mse_P_boxplot$Xi)
@@ -93,20 +94,20 @@ dev.off()
 
 # --- Boxplots for Y: outcome ----
 
-cbPalette <- c("#007399")   #, "#00ace6", "#80dfff")
+#cbPalette <- c("#007399")   #, "#00ace6", "#80dfff")
 
-bias_Y=matrix(c(apply(bias_Y_CASDMM1,2,mean),
-                apply(bias_Y_CASDMM2,2,mean),
-                apply(bias_Y_CASDMM3,2,mean),
-                apply(bias_Y_CASDMM4,2,mean),
-                apply(bias_Y_CASDMM5,2,mean)), ncol=5)
+bias_Y=matrix(c(apply(bias_Y_CASDMM1,2,mean),apply(bias_Y_SLM1,2,mean),
+                apply(bias_Y_CASDMM2,2,mean),apply(bias_Y_SLM2,2,mean),
+                apply(bias_Y_CASDMM3,2,mean),apply(bias_Y_SLM3,2,mean),
+                apply(bias_Y_CASDMM4,2,mean),apply(bias_Y_SLM4,2,mean),
+                apply(bias_Y_CASDMM5,2,mean),apply(bias_Y_SLM5,2,mean, na.rm = FALSE)), ncol=10)
 
-round(apply(bias_Y,2,mean), 4)
-round(apply(bias_Y,2,sd), 4)
+round(apply(bias_Y,2,mean,na.rm = TRUE), 4)
+round(apply(bias_Y,2,sd,na.rm = TRUE), 4)
 
 bias_Y_boxplot=as.data.frame(cbind(Xi=c(bias_Y),
-                                   Q=(rep(rep("CASDMM",samples),5)),
-                                   cov=paste0("scenario ",rep(1:5,each=samples))))
+                                   Q=(rep(c(rep("CASBAH",samples),rep("SLM",samples)),10)),
+                                   cov=paste0("scenario ",rep(1:5,each=samples*2))))
 bias_Y_boxplot$cov=as.character(bias_Y_boxplot$cov)
 bias_Y_boxplot$Q=as.character(bias_Y_boxplot$Q)
 bias_Y_boxplot$Xi=as.numeric(bias_Y_boxplot$Xi)
@@ -129,15 +130,15 @@ ggplot(bias_Y_boxplot, aes(x=cov, y=Xi, fill=Q)) +
   xlab("")
 dev.off()
 
-cbPalette <- c("#80dfff")   #, "#00ace6", "#80dfff")
+#cbPalette <- c("#80dfff")   #, "#00ace6", "#80dfff")
 
-mse_Y_boxplot=as.data.frame(cbind(Xi=c(apply(mse_Y_CASDMM1,2,mean),
-                                       apply(mse_Y_CASDMM2,2,mean),
-                                       apply(mse_Y_CASDMM3,2,mean),
-                                       apply(mse_Y_CASDMM4,2,mean),
-                                       apply(mse_Y_CASDMM5,2,mean)),
-                                  Q=(rep(rep("CASDMM",samples),5)),
-                                  cov=paste0("scenario ",rep(1:5,each=samples))))
+mse_Y_boxplot=as.data.frame(cbind(Xi=c(apply(mse_Y_CASDMM1,2,mean),apply(mse_Y_SLM1,2,mean),
+                                       apply(mse_Y_CASDMM2,2,mean),apply(mse_Y_SLM2,2,mean),
+                                       apply(mse_Y_CASDMM3,2,mean),apply(mse_Y_SLM3,2,mean),
+                                       apply(mse_Y_CASDMM4,2,mean),apply(mse_Y_SLM4,2,mean),
+                                       apply(mse_Y_CASDMM5,2,mean),apply(mse_Y_SLM5,2,mean)),
+                                  Q=(rep(c(rep("CASBAH",samples),rep("SLM",samples)),10)),
+                                  cov=paste0("scenario ",rep(1:5,each=samples*2))))
 mse_Y_boxplot$cov=as.character(mse_Y_boxplot$cov)
 mse_Y_boxplot$Q=as.character(mse_Y_boxplot$Q)
 mse_Y_boxplot$Xi=as.numeric(mse_Y_boxplot$Xi)
@@ -156,6 +157,7 @@ ggplot(mse_Y_boxplot, aes(x=cov, y=Xi, fill=Q)) +
         legend.background = element_rect(fill='transparent'),
         panel.grid.major = element_line(color = "grey",size = 0.1))+
   ylab("MSE Outcome") +
-  xlab("")
+  xlab("") #+
+  #ylim(c(0,120))
 dev.off()
 
