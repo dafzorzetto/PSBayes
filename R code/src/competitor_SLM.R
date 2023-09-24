@@ -1,3 +1,9 @@
+#library
+library(mvtnorm)
+library(CholWishart)
+library(parallel)
+library(truncnorm)
+library(invgamma)
 library(BNPmix)
 
 SLM_GIbbs<-function(c_n,sim){
@@ -24,7 +30,8 @@ SLM_GIbbs<-function(c_n,sim){
   N_XyT = dim(XyT)[2]
   
   beta_yC=matrix(rep(1,N_XyC*R), ncol=R)
-  beta_yC_0=rep(0,N_XyC-1)
+  #beta_yC_0=rep(0,N_XyC-1)
+  beta_yC_0=rep(0,N_XyC)
   s2_C=10^2
   
   beta_y_d=t(rep(1,R))
@@ -32,7 +39,8 @@ SLM_GIbbs<-function(c_n,sim){
   s2_y_d=10^2
   
   beta_yT=matrix(rep(1,N_XyT*R), ncol=R)
-  beta_yT_0=rep(0,N_XyT-1)
+  #beta_yT_0=rep(0,N_XyT-1)
+  beta_yT_0=rep(0,N_XyT)
   s2_T=10^2
   
   gamma_0 = rep(1,R)
@@ -181,32 +189,49 @@ SLM_GIbbs<-function(c_n,sim){
     }
     
     # updateing beta Y (regression of the mean in Y-model)
+    #phi_b2=diag(1/exp(gamma_0[g-1]+dD[T==1,2]*gamma_1[g-1])) 
+    #X_tilde_b2=cbind(rep(1,n_T),dD[T==1,2],dD[T==1,2]*dD[T==1,1])
+    #Y_tilde_b2=Y[T==1]-dD[T==1,1]*beta_y_d[,g-1]                                                        
+    #V_b2=solve(t(X_tilde_b2)%*%phi_b2%*%X_tilde_b2+diag(3)/s2_T)
+    #V_b2=(V_b2+t(V_b2))/2
+    #M_b2=V_b2%*%(t(X_tilde_b2)%*%phi_b2%*%Y_tilde_b2+beta_yT_0/s2_T)
+    #beta_yT[c(1,3:N_XyT),g]=rmvnorm(1,M_b2,V_b2)
+    
+    #phi_b1=diag(rep(1/exp(gamma_0[g-1]),n-n_T))    
+    #X_tilde_b1=rep(1,n-n_T)
+    #Y_tilde_b1=Y[T==0]-XyC[T==0,2]*beta_y_d[,g-1]                                                    
+    #V_b1=solve(t(X_tilde_b1)%*%phi_b1%*%X_tilde_b1+1/s2_C)
+    #V_b1=(V_b1+t(V_b1))/2
+    #M_b1=V_b1%*%(t(X_tilde_b1)%*%phi_b1%*%Y_tilde_b1+beta_yC_0/s2_C)
+    #beta_yC[1,g]=rmvnorm(1,M_b1,V_b1)
+    
+    #phi_a=diag(c(rep(1/exp(gamma_0[g-1]),n-n_T),1/exp(gamma_0[g-1]+dD[T==1,2]*gamma_1[g-1])))    
+    #X_tilde_a=matrix(c(dD[T==0,1],dD[T==1,1]),nrow=n)
+    #Y_tilde_a=c(Y[T==0]-beta_yC[1,g],Y[T==1]-XyT[T==1,c(1,3:N_XyT)]%*%beta_yT[c(1,3:N_XyT),g])                                                         
+    #V_a=solve(t(X_tilde_a)%*%phi_a%*%X_tilde_a+1/s2_y_d)
+    #V_a=(V_a+t(V_a))/2
+    #M_a=V_a%*%(t(X_tilde_a)%*%phi_a%*%Y_tilde_a+beta_y_d_0/s2_y_d)
+    #beta_y_d[,g]=rmvnorm(1,M_a,V_a)
+    
+    #beta_yC[2,g]=beta_y_d[,g]
+    #beta_yT[2,g]=beta_y_d[,g]
+    
+    
     phi_b2=diag(1/exp(gamma_0[g-1]+dD[T==1,2]*gamma_1[g-1])) 
-    X_tilde_b2=cbind(rep(1,n_T),dD[T==1,2],dD[T==1,2]*dD[T==1,1])
-    Y_tilde_b2=Y[T==1]-dD[T==1,1]*beta_y_d[,g-1]                                                        
-    V_b2=solve(t(X_tilde_b2)%*%phi_b2%*%X_tilde_b2+diag(3)/s2_T)
+    X_tilde_b2=cbind(rep(1,n_T),dD[T==1,1],dD[T==1,2],dD[T==1,2]*dD[T==1,1])
+    Y_tilde_b2=Y[T==1]                                                        
+    V_b2=solve(t(X_tilde_b2)%*%phi_b2%*%X_tilde_b2+diag(4)/s2_T)
     V_b2=(V_b2+t(V_b2))/2
     M_b2=V_b2%*%(t(X_tilde_b2)%*%phi_b2%*%Y_tilde_b2+beta_yT_0/s2_T)
-    beta_yT[c(1,3:N_XyT),g]=rmvnorm(1,M_b2,V_b2)
+    beta_yT[,g]=rmvnorm(1,M_b2,V_b2)
     
     phi_b1=diag(rep(1/exp(gamma_0[g-1]),n-n_T))    
-    X_tilde_b1=rep(1,n-n_T)
-    Y_tilde_b1=Y[T==0]-XyC[T==0,2]*beta_y_d[,g-1]                                                    
-    V_b1=solve(t(X_tilde_b1)%*%phi_b1%*%X_tilde_b1+1/s2_C)
+    X_tilde_b1=cbind(rep(1,n-n_T),dD[T==0,1])
+    Y_tilde_b1=Y[T==0]                                                   
+    V_b1=solve(t(X_tilde_b1)%*%phi_b1%*%X_tilde_b1+diag(2)/s2_C)
     V_b1=(V_b1+t(V_b1))/2
     M_b1=V_b1%*%(t(X_tilde_b1)%*%phi_b1%*%Y_tilde_b1+beta_yC_0/s2_C)
-    beta_yC[1,g]=rmvnorm(1,M_b1,V_b1)
-    
-    phi_a=diag(c(rep(1/exp(gamma_0[g-1]),n-n_T),1/exp(gamma_0[g-1]+dD[T==1,2]*gamma_1[g-1])))    
-    X_tilde_a=matrix(c(dD[T==0,1],dD[T==1,1]),nrow=n)
-    Y_tilde_a=c(Y[T==0]-beta_yC[1,g],Y[T==1]-XyT[T==1,c(1,3:N_XyT)]%*%beta_yT[c(1,3:N_XyT),g])                                                         
-    V_a=solve(t(X_tilde_a)%*%phi_a%*%X_tilde_a+1/s2_y_d)
-    V_a=(V_a+t(V_a))/2
-    M_a=V_a%*%(t(X_tilde_a)%*%phi_a%*%Y_tilde_a+beta_y_d_0/s2_y_d)
-    beta_y_d[,g]=rmvnorm(1,M_a,V_a)
-    
-    beta_yC[2,g]=beta_y_d[,g]
-    beta_yT[2,g]=beta_y_d[,g]
+    beta_yC[,g]=rmvnorm(1,M_b1,V_b1)
     
     
     # updateing gamma_0 and gamma_1 (variance of Y-model)
@@ -223,8 +248,10 @@ SLM_GIbbs<-function(c_n,sim){
     gamma_1star = rnorm(1,gamma_1_mu, sqrt(gamma_1_s2))
     new = log(pnorm(Y[T==1],XyT[T==1,]%*%beta_yT[,g],sqrt(exp(gamma_0[g]+dD[T==1,2]*gamma_1star)))) 
     old = log(pnorm(Y[T==1],XyT[T==1,]%*%beta_yT[,g],sqrt(exp(gamma_0[g]+dD[T==1,2]*gamma_1[g-1]))))
+    old[old==(-Inf)]<- (-100)
+    new[new==(-Inf)]<- (-100)
     gamma_1[g]=ifelse(runif(1)<exp(sum(new-old)),gamma_1star,gamma_1[g-1])
-    #print(paste0("gamma 1 :",gamma_1[g-1]," / ",gamma_1star," / ",gamma_1[g]))
+    #print(paste0("gamma 1 :",gamma_1[g-1]," / ",sum(new), "/",sum(old)," / ",gamma_1[g]))
     
     alphaSTAR = rgamma(1,1,1)
     tmp = prod(dbeta(pi_star[1:(J-1)],1,alphaSTAR))/prod(dbeta(pi_star[1:(J-1)],1,alpha[g-1]))
