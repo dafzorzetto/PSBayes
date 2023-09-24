@@ -33,8 +33,8 @@ bias_P=a<-matrix(c(apply(bias_P_CASDMM1,2,mean),apply(bias_P_SLM1,2,mean),
                    apply(bias_P_CASDMM5,2,mean),apply(bias_P_SLM5,2,mean)),
                  ncol=10)
 
-round(apply(bias_P,2,mean,na.rm = TRUE), 4)
-round(apply(bias_P,2,sd,na.rm = TRUE), 4)
+round(apply(bias_P,2,median,na.rm = TRUE), 4)
+round(apply(bias_P,2,IQR,na.rm = TRUE), 4)
 
 bias_P_boxplot=as.data.frame(cbind(Xi=c(bias_P),
                                  Q=(rep(c(rep("CASBAH",samples),rep("SLM",samples)),5)),
@@ -102,8 +102,8 @@ bias_Y=matrix(c(apply(bias_Y_CASDMM1,2,mean),apply(bias_Y_SLM1,2,mean),
                 apply(bias_Y_CASDMM4,2,mean),apply(bias_Y_SLM4,2,mean),
                 apply(bias_Y_CASDMM5,2,mean),apply(bias_Y_SLM5,2,mean, na.rm = FALSE)), ncol=10)
 
-round(apply(bias_Y,2,mean,na.rm = TRUE), 4)
-round(apply(bias_Y,2,sd,na.rm = TRUE), 4)
+round(apply(bias_Y,2,median,na.rm = TRUE), 4)
+round(apply(bias_Y,2,IQR,na.rm = TRUE), 4)
 
 bias_Y_boxplot=as.data.frame(cbind(Xi=c(bias_Y),
                                    Q=(rep(c(rep("CASBAH",samples),rep("SLM",samples)),10)),
@@ -157,7 +157,7 @@ ggplot(mse_Y_boxplot, aes(x=cov, y=Xi, fill=Q)) +
         legend.background = element_rect(fill='transparent'),
         panel.grid.major = element_line(color = "grey",size = 0.1))+
   ylab("MSE Outcome") +
-  xlab("") #+
-  #ylim(c(0,120))
+  xlab("") +
+  ylim(c(0,120))
 dev.off()
 

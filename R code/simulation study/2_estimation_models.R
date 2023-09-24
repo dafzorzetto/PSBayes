@@ -41,7 +41,7 @@ SLM_5=mclapply(1:samples, SLM_GIbbs, sim=scenario_5, mc.cores = 6)
 
 save.image("estimated_models_SLM.RData")
 
-prova=SLM_GIbbs(2, scenario_5)
+prova=SLM_GIbbs(1, scenario_5)
 
 
 prova5<- lapply(1:2, function(i) SLM_GIbbs(i, scenario_5))
