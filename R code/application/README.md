@@ -1,6 +1,8 @@
 # Data Resource
- - *Center for Disease Control and Prevention*: *https://wonder.cdc.gov/mcd-icd10.html* for information on different causes of mortality 
- - paper Zigler : ADD REFERENCE PAPER AND HOW TO DOWNLOAD DATASET for level of $PM_{2.5}$ and air pollution regolation
+ - <a href=https://wonder.cdc.gov/mcd-icd10.html>_Center for Disease Control and Prevention_ </a>: for information on different causes of mortality 
+ - <a href=https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5792368/>_"Impact of National Ambient Air
+Quality Standards nonattainment designations on particulate pollution and health."_</a> by C. M. Zigler, C. Choirat, and F. Dominici (2018): for the level of $PM_{2.5}$ and air pollution regulations
+(dowload the dataset from the <a href=https://dataverse.harvard.edu/dataverse/pm97naaqs>_dataverse_ </a>)
 
 ### How to download the data from *Center for Disease Control and Prevention*
 Google *https://wonder.cdc.gov/mcd-icd10.html*, agree terms of data use, and this page apare
