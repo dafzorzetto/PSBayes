@@ -3,7 +3,7 @@
 ##############################################################
 
 #load results
-load("C:/Users/dafne/Desktop/DOTTORATO/PROGETTO PhD _2/data/results_model_10vs12.RData")
+load("results_application.RData")
 
 #libraries
 library(ggplot2)
@@ -13,9 +13,6 @@ library(hrbrthemes)
 library(viridis)
 
 ##############################################################
-
-results=Gibbs_CASDMM
-results=Gibbs_CASDMM_cov
 
 ##############################################################
 
@@ -29,8 +26,8 @@ hist(P_obs[T_var==1], nclass=40, xlim=c(-6,0), main="P(1) obs")
 hist(results$post_P_1_imp[T_var==0], nclass=40, xlim=c(-6,0), main="P(1) imput")
 
 par(mfrow=c(2,2))
-hist(Y_obs[T_var==0], nclass=40, xlim=c(-200,50), main="Y(0) obs")
-hist(results$post_Y_0_imp[T_var==1], nclass=40, xlim=c(-200,50), main="Y(0) imput")
+hist(Y_obs[T_var==0], nclass=40, xlim=c(-250,50), main="Y(0) obs")
+hist(results$post_Y_0_imp[T_var==1], nclass=40, xlim=c(-250,50), main="Y(0) imput")
 hist(Y_obs[T_var==1], nclass=40, xlim=c(-250,50), main="Y(1) obs")
 hist(results$post_Y_1_imp[T_var==0], nclass=40, xlim=c(-250,50), main="Y(1) imput")
 
@@ -39,29 +36,36 @@ hist(results$post_P_1_imp-results$post_P_0_imp,nclass=50, main="P(1)-P(0)")
 hist(results$post_Y_1_imp-results$post_Y_0_imp,nclass=50, main="Y(1)-Y(0)")
 
 par(mfrow=c(3,1))
-hist((results$post_P_1_imp-results$post_P_0_imp)[results$S_strata_cluster==1],nclass=50, main="P(1)-P(0)|strata=1")
-hist((results$post_P_1_imp-results$post_P_0_imp)[results$S_strata_cluster==2],nclass=50, main="P(1)-P(0)|strata=2")
-hist((results$post_P_1_imp-results$post_P_0_imp)[results$S_strata_cluster==3],nclass=50, main="P(1)-P(0)|strata=3")
+diff_P=(results$post_P_1_imp-results$post_P_0_imp)
+hist(diff_P[results$S_strata_cluster=="-1"],nclass=50, main="P(1)-P(0)|strata=-1", xlim=c(min(diff_P),max(diff_P)))
+hist(diff_P[results$S_strata_cluster=="0"],nclass=50, main="P(1)-P(0)|strata=0", xlim=c(min(diff_P),max(diff_P)))
+hist(diff_P[results$S_strata_cluster=="1"],nclass=50, main="P(1)-P(0)|strata=+1", xlim=c(min(diff_P),max(diff_P)))
 
 par(mfrow=c(3,1))
-hist((results$post_P_1_imp-results$post_P_0_imp)[results$S_strata_cluster=="-1"],nclass=50, main="P(1)-P(0)|strata=-1")
-hist((results$post_P_1_imp-results$post_P_0_imp)[results$S_strata_cluster=="0"],nclass=50, main="P(1)-P(0)|strata=0")
-hist((results$post_P_1_imp-results$post_P_0_imp)[results$S_strata_cluster=="1"],nclass=50, main="P(1)-P(0)|strata=+1")
+diff_Y=(results$post_Y_1_imp-results$post_Y_0_imp)
+hist(diff_Y[results$S_strata_cluster=="-1"],nclass=50, main="Y(1)-Y(0)|strata=-1", xlim=c(min(diff_Y),max(diff_Y)))
+hist(diff_Y[results$S_strata_cluster=="0"],nclass=50, main="Y(1)-Y(0)|strata=0", xlim=c(min(diff_Y),max(diff_Y)))
+hist(diff_Y[results$S_strata_cluster=="1"],nclass=50, main="Y(1)-Y(0)|strata=+1", xlim=c(min(diff_Y),max(diff_Y)))
 
-par(mfrow=c(3,1))
-hist((results$post_Y_1_imp-results$post_Y_0_imp)[results$S_strata_cluster=="-1"],nclass=50, main="Y(1)-Y(0)|strata=-1")
-hist((results$post_Y_1_imp-results$post_Y_0_imp)[results$S_strata_cluster=="0"],nclass=50, main="Y(1)-Y(0)|strata=0")
-hist((results$post_Y_1_imp-results$post_Y_0_imp)[results$S_strata_cluster=="1"],nclass=50, main="Y(1)-Y(0)|strata=+1")
-
-
-mean((results$post_Y_1_imp-results$post_Y_0_imp)[results$S_strata_cluster=="-1"])
-mean((results$post_Y_1_imp-results$post_Y_0_imp)[results$S_strata_cluster=="0"])
-mean((results$post_Y_1_imp-results$post_Y_0_imp)[results$S_strata_cluster=="1"])
 
 covariates=sapply(c("-1","0","1"),function(c)
   apply(dataset_matched[which(results$S_strata_cluster==c),
                         c("PctBlack","PctHisp","PctHighSchool","PctUrban",
                           "PctFemale","PctPoor")],2,mean))
+
+##############################################################
+# chains
+
+par(mfrow=c(2,3))
+for (i in 1:10){
+  plot(results$post_eta[i,], type="l")
+  abline(h=mean(results$post_eta[i,]), col="red")
+}
+
+for (i in 1:6){
+  plot(results$chains_theta[i,], type="l")
+  abline(h=mean(results$chains_theta[i,]), col="red")
+}
 
 ##############################################################
 # ---    boxplot ----

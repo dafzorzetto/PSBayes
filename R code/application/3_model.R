@@ -22,8 +22,8 @@ library(fmsb)
 ###################################################################
 
 # iterations
-R=6000
-R_burnin=4000
+R=4000
+R_burnin=3000
 
 # max number clusters
 n_cluster=10
@@ -43,9 +43,14 @@ Y_obs=dataset_matched$all_causes_ADJ
 
 system.time(results_CASBAH <- Gibbs_CASDMM(1,matrix_X,T_var,P_obs,Y_obs))
 system.time(results_CASBAH_cov <- Gibbs_CASDMM_cov(1,matrix_X,T_var,P_obs,Y_obs))
+system.time(results_CASBAH_cov_constrains <- Gibbs_CASDMM_cov_constrains(1,matrix_X,T_var,P_obs,Y_obs))
 
 
+results=results_CASBAH
+results=results_CASBAH_cov
+results=results_CASBAH_cov_constrains
 
+save.image(results,"results_application.RData")
 
 
 ###################################################################
