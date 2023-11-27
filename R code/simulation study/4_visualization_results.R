@@ -7,6 +7,9 @@
 # load data
 load("estimands.RData")
 
+#source
+source("src/visualization_results_function.R")
+
 #libraries
 library(xtable)
 library(ggplot2)
@@ -161,3 +164,27 @@ ggplot(mse_Y_boxplot, aes(x=cov, y=Xi, fill=Q)) +
   ylim(c(0,120))
 dev.off()
 
+# --- Boxplots for principal strata ----
+
+Princ_strata_1=lapply(1:samples,function(i) order_strata(CASDMM_1[[i]]))
+matrix_PS_1=matrix(unlist(Princ_strata_1), ncol=3, byrow=TRUE)
+Princ_strata_2=lapply(1:samples,function(i) order_strata(CASDMM_2[[i]]))
+matrix_PS_2=matrix(unlist(Princ_strata_2), ncol=3, byrow=TRUE)
+Princ_strata_3=lapply(1:samples,function(i) order_strata(CASDMM_3[[i]]))
+matrix_PS_3=matrix(unlist(Princ_strata_3), ncol=3, byrow=TRUE)
+Princ_strata_4=lapply(1:samples,function(i) order_strata(CASDMM_4[[i]]))
+matrix_PS_4=matrix(unlist(Princ_strata_4), ncol=3, byrow=TRUE)
+Princ_strata_5=lapply(1:samples,function(i) order_strata(CASDMM_5[[i]]))
+matrix_PS_5=matrix(unlist(Princ_strata_5), ncol=3, byrow=TRUE)
+
+boxplots_PS(matrix_PS=matrix_PS_1,scenario_n=1)
+boxplots_PS(matrix_PS=matrix_PS_2,scenario_n=2)
+boxplots_PS(matrix_PS=matrix_PS_3,scenario_n=3)
+boxplots_PS(matrix_PS=matrix_PS_4,scenario_n=4)
+boxplots_PS(matrix_PS=matrix_PS_5,scenario_n=5)
+
+boxplots_PS_est(matrix_PS=matrix_PS_1,scenario_n=1)
+boxplots_PS_est(matrix_PS=matrix_PS_2,scenario_n=2)
+boxplots_PS_est(matrix_PS=matrix_PS_3,scenario_n=3)
+boxplots_PS_est(matrix_PS=matrix_PS_4,scenario_n=4)
+boxplots_PS_est(matrix_PS=matrix_PS_5,scenario_n=5)
