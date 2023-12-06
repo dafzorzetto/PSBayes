@@ -33,10 +33,15 @@ boxplots_PS<-function(matrix_PS,scenario_n){
   
   boxplot_df=as.data.frame(cbind(Xi=matrix_PS[,1],
                                  Q=matrix_PS[,3]))
+  if (length(unique(boxplot_df$Q))==2) 
+    boxplot_df$Q=boxplot_df$Q+1
   boxplot_df$Q=as.character(boxplot_df$Q)
   boxplot_df$Q[boxplot_df$Q==1]="V=-1"
   boxplot_df$Q[boxplot_df$Q==2]="V=0"
   boxplot_df$Q[boxplot_df$Q==3]="V=1"
+  
+  if(length(unique(boxplot_df$Q))==2)
+    cbPalette=cbPalette[2:3]
   
   g<-ggplot(boxplot_df, aes(x=Q, y=Xi, fill=Q)) + 
     scale_fill_manual(values=cbPalette, name="strata")+
@@ -50,7 +55,7 @@ boxplots_PS<-function(matrix_PS,scenario_n){
           title =element_text(size=12),
           legend.background = element_rect(fill='transparent'),
           panel.grid.major = element_line(color = "grey",size = 0.1))+
-    ylab("GATEs") +
+    ylab("P(1)-P(0)") +
     xlab("")+
     ggtitle(paste0("    Scenario ",scenario_n)) 
   
@@ -70,10 +75,15 @@ boxplots_PS_est<-function(matrix_PS,scenario_n){
   
   boxplot_df=as.data.frame(cbind(Xi=matrix_PS[,2],
                                  Q=matrix_PS[,3]))
+  if (length(unique(boxplot_df$Q))==2) 
+    boxplot_df$Q=boxplot_df$Q+1
   boxplot_df$Q=as.character(boxplot_df$Q)
   boxplot_df$Q[boxplot_df$Q==1]="V=-1"
   boxplot_df$Q[boxplot_df$Q==2]="V=0"
   boxplot_df$Q[boxplot_df$Q==3]="V=1"
+  
+  if(length(unique(boxplot_df$Q))==2)
+    cbPalette=cbPalette[2:3]
   
   g<-ggplot(boxplot_df, aes(x=Q, y=Xi, fill=Q)) + 
     scale_fill_manual(values=cbPalette, name="Princ.CE")+
@@ -87,7 +97,7 @@ boxplots_PS_est<-function(matrix_PS,scenario_n){
           title =element_text(size=12),
           legend.background = element_rect(fill='transparent'),
           panel.grid.major = element_line(color = "grey",size = 0.1))+
-    ylab("GATEs") +
+    ylab("Y(1)-Y(0)") +
     xlab("")+
     ggtitle(paste0("    Scenario ",scenario_n)) 
   
