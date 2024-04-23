@@ -26,6 +26,7 @@ All_causes=na.omit(diff_deaths_rate[,2:5])
 data$FIPS=as.integer(data$FIPS)
 
 counties<-intersect(data$FIPS,All_causes$County.Code)
+length(unique(data$FIPS))
 counties_where<-sapply(counties, function(i) which(data$FIPS==i))
 
 data_reduced<-data[1:2,]
@@ -50,6 +51,7 @@ for (i in 3:length(counties_where)){
 FIPS_codes<-unique(data_reduced$FIPS)
 counties_deaths<-sapply(FIPS_codes, function(i) which(All_causes$County.Code==i))
 
+setdiff(counties,data$FIPS)
 
 # --- final dataset: merge of death_causes + pollution policies ---
 
