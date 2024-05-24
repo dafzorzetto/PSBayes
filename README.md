@@ -1,1 +1,1 @@
-# Code for the <a href=https://www.youtube.com/watch?v=LJTk64tzduQ&ab_channel=theclashVEVO>_CASBAH_</a> model.
+# Code for the <a href=https://rb.gy/0n5tha>_CASBAH_</a> model.
