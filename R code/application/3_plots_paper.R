@@ -1,5 +1,5 @@
 ##############################################################
-# ---     GRAPH FOR PAPER    ----
+# ---     GRAPHS FOR PAPER    ----
 ##############################################################
 
 #load results
@@ -14,56 +14,9 @@ library(viridis)
 
 ##############################################################
 
-##############################################################
-
-table(results$S_all_cluster)
-table(results$S_strata_cluster)
-
-par(mfrow=c(2,2))
-hist(P_obs[T_var==0], nclass=40, xlim=c(-8,2), main="P(0) obs")
-hist(results$post_P_0_imp[T_var==1], nclass=40, xlim=c(-8,2), main="P(0) imput")
-hist(P_obs[T_var==1], nclass=40, xlim=c(-8,2), main="P(1) obs")
-hist(results$post_P_1_imp[T_var==0], nclass=40, xlim=c(-8,2), main="P(1) imput")
-
-par(mfrow=c(2,2))
-hist(Y_obs[T_var==0], nclass=40, xlim=c(-250,50), main="Y(0) obs")
-hist(results$post_Y_0_imp[T_var==1], nclass=40, xlim=c(-250,50), main="Y(0) imput")
-hist(Y_obs[T_var==1], nclass=40, xlim=c(-250,50), main="Y(1) obs")
-hist(results$post_Y_1_imp[T_var==0], nclass=40, xlim=c(-250,50), main="Y(1) imput")
-
-par(mfrow=c(2,1))
-hist(results$post_P_1_imp-results$post_P_0_imp,nclass=50, main="P(1)-P(0)")
-hist(results$post_Y_1_imp-results$post_Y_0_imp,nclass=50, main="Y(1)-Y(0)")
-
-par(mfrow=c(3,1))
-diff_P=(results$post_P_1_imp-results$post_P_0_imp)
-hist(diff_P[results$S_strata_cluster=="-1"],nclass=50, main="P(1)-P(0)|strata=-1", xlim=c(min(diff_P),max(diff_P)))
-hist(diff_P[results$S_strata_cluster=="0"],nclass=50, main="P(1)-P(0)|strata=0", xlim=c(min(diff_P),max(diff_P)))
-hist(diff_P[results$S_strata_cluster=="1"],nclass=50, main="P(1)-P(0)|strata=+1", xlim=c(min(diff_P),max(diff_P)))
-
-par(mfrow=c(3,1))
-diff_Y=(results$post_Y_1_imp-results$post_Y_0_imp)
-hist(diff_Y[results$S_strata_cluster=="-1"],nclass=50, main="Y(1)-Y(0)|strata=-1", xlim=c(min(diff_Y),max(diff_Y)))
-hist(diff_Y[results$S_strata_cluster=="0"],nclass=50, main="Y(1)-Y(0)|strata=0", xlim=c(min(diff_Y),max(diff_Y)))
-hist(diff_Y[results$S_strata_cluster=="1"],nclass=50, main="Y(1)-Y(0)|strata=+1", xlim=c(min(diff_Y),max(diff_Y)))
-
 covariates=sapply(c("-1","0","1"),function(c)
   apply(matrix_X[which(results$S_strata_cluster==c),],2,mean))
 
-##############################################################
-# chains
-
-par(mfrow=c(2,3))
-for (i in 1:12){
-  plot(results$post_eta[i,], type="l")
-  abline(h=mean(results$post_eta[i,]), col="red")
-}
-
-par(mfrow=c(3,4))
-for (i in 1:36){
-  plot(results$chains_theta[i,], type="l")
-  abline(h=mean(results$chains_theta[i,]), col="red")
-}
 
 ##############################################################
 # ---    boxplot ----
@@ -149,7 +102,7 @@ ggplot(data_frame, aes(x=P, y=cl, fill=cl)) +
   ggtitle(expression(paste("E [ ", Y[i](1)-Y[i](0), " | stratum ]")))
 #dev.off()
 
-##############################################################
+
 ##############################################################
 # ---    spiderplot ----
 ##############################################################
