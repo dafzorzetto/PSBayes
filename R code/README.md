@@ -12,9 +12,9 @@
    functions to estimate CASBAH with the conjugate prior for the probit (SUN distribution)
 
    suggestion: use CASBAH.R to avoid matrices dimensional problems
-   - **`competitor_SLM.R`**:
+- **`competitor_SLM.R`**:
 
-   functions to estimate the competitor model, proposed by <a href=https://www.tandfonline.com/doi/abs/10.1198/jasa.2011.ap10425?casa_token=ELbU1ECJKZoAAAAA:ZgtTF68ngeJ64PFC9zOGlW2gIOLvWrLcmn3pN56RWpHT5sicPk3LDmOaOLn_-QHs7E1_CA0WURqztw>_Schwartz, Li, and Mealli_ </a>
+  functions to estimate the competitor model, proposed by <a href=https://www.tandfonline.com/doi/abs/10.1198/jasa.2011.ap10425?casa_token=ELbU1ECJKZoAAAAA:ZgtTF68ngeJ64PFC9zOGlW2gIOLvWrLcmn3pN56RWpHT5sicPk3LDmOaOLn_-QHs7E1_CA0WURqztw>_Schwartz, Li, and Mealli_</a>
  - **`plots_simulations.R`**:
 
    functions to visualize the simulated data
