@@ -1,4 +1,4 @@
-## Code files:
+## Code files: 
 
 ### General functions (in **`src`** folder):
  - **`functions_simulations.R`**:
