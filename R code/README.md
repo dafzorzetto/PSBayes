@@ -14,7 +14,7 @@
    suggestion: use CASBAH.R to avoid matrices dimensional problems
 - **`competitor_SLM.R`**:
 
-  functions to estimate the competitor model, proposed by <a href=https://www.tandfonline.com/doi/abs/10.1198/jasa.2011.ap10425?casa_token=ELbU1ECJKZoAAAAA:ZgtTF68ngeJ64PFC9zOGlW2gIOLvWrLcmn3pN56RWpHT5sicPk3LDmOaOLn_-QHs7E1_CA0WURqztw>_*Schwartz, Li, and Mealli*_</a>
+  functions to estimate the competitor model, proposed by <a href=https://www.tandfonline.com/doi/abs/10.1198/jasa.2011.ap10425?casa_token=ELbU1ECJKZoAAAAA:ZgtTF68ngeJ64PFC9zOGlW2gIOLvWrLcmn3pN56RWpHT5sicPk3LDmOaOLn_-QHs7E1_CA0WURqztw>_'A Bayesian Semiparametric Approach to Intermediate Variables in Causal Inference'_</a> by Schwartz, Li, and Mealli
  - **`plots_simulations.R`**:
 
    functions to visualize the simulated data
