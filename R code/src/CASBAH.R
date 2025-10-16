@@ -309,7 +309,7 @@ Gibbs_CASDMM<-function(c,sim){
     om_0=sapply(T0, function(i) omega(X=matrix_X[i,],beta=beta_1))
     om_0[which(is.nan(om_0))]=0
     p0=sapply(1:n0, function(i) (1:n_cluster)%*%(rmultinom(1,1,om_0[,i])))
-    P_mis[T0]=rnorm(T0,eta[p0],sigma[p0])
+    P_mis[T0]=rnorm(T0,eta[p0],sqrt(sigma[p0]))
     # level t=1 observed --> level T=0 missing
     om_1=sapply(T1, function(i) omega(X=matrix_X[i,],beta=beta_0))
     om_1[which(is.nan(om_1))]=0
@@ -317,7 +317,7 @@ Gibbs_CASDMM<-function(c,sim){
     v_2=exp(lambda[1]+lambda[2]*P_obs_1)/((theta_1[3]+theta_1[4]*P_obs_1)^2)
     var_inv=1/sigma[p1]+1/v_2
     m_2=(Y_obs_1-theta_1[1]-theta_1[2]*P_obs_1)/(theta_1[3]+theta_1[4]*P_obs_1)
-    P_mis[T1]=rnorm(T1,1/(var_inv)*(eta[p1]/sigma[p1]+m_2/v_2),1/(var_inv))
+    P_mis[T1]=rnorm(T1,1/(var_inv)*(eta[p1]/sigma[p1]+m_2/v_2),1/sqrt(var_inv))
     
     # -----   P_IMP: post-treatent observed: P(t)   -----
     # level t=0 observed 
