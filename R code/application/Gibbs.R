@@ -118,9 +118,9 @@ Gibbs_CASDMM<-function(c,matrix_X,T_var,P_obs,Y_obs){
     #tab_wg=cbind(WG)
     #Binder=partition.BNPdens(list(clust=part),dist = "Binder")$partitions[1,]
     #tab_binder=cbind(Binder)
-    mode=apply(part,2, table)
-    tab=apply(mode, 2, function(i) names(which.max(i)))
-    dimnames(tab)=NULL
+    mode_table=apply(part,2, table)
+    tab=sapply(mode_table, function(i) names(which.max(i)))
+    tab <- as.numeric(tab)
     return(list(tab=tab,part=part))
     
   }
@@ -433,7 +433,11 @@ Gibbs_CASDMM<-function(c,matrix_X,T_var,P_obs,Y_obs){
     post_P_1_imp=apply(post_P_1,1,median, na.rm=TRUE),
     all_Y1=post_Y_1_imp, all_Y0=post_Y_0_imp,
     post_Y_0_imp=apply(post_Y_0_imp,1,median, na.rm=TRUE), 
-    post_Y_1_imp=apply(post_Y_1_imp,1,median, na.rm=TRUE)
+    post_Y_1_imp=apply(post_Y_1_imp,1,median, na.rm=TRUE),
+    post_P_0_all=post_P_0,
+    post_P_1_all=post_P_1,
+    post_Y_0_all=post_Y_0_imp,
+    post_Y_1_all=post_Y_1_imp
   ))
 }
 
@@ -547,9 +551,9 @@ Gibbs_CASDMM_cov<-function(c,matrix_X,T_var,P_obs,Y_obs){
     #tab=cbind(WG)
     #Binder=partition.BNPdens(list(clust=part),dist = "Binder")$partitions[1,]
     #tab=cbind(Binder)
-    mode=apply(part,2, table)
-    tab=apply(mode, 2, function(i) names(which.max(i)))
-    dimnames(tab)=NULL
+    mode_table=apply(part,2, table)
+    tab=sapply(mode_table, function(i) names(which.max(i)))
+    tab <- as.numeric(tab)
     return(list(tab=tab,part=part))
     
   }
@@ -846,7 +850,11 @@ Gibbs_CASDMM_cov<-function(c,matrix_X,T_var,P_obs,Y_obs){
     post_P_0_imp=apply(post_P_0,1,mean, na.rm=TRUE), 
     post_P_1_imp=apply(post_P_1,1,mean, na.rm=TRUE),
     post_Y_0_imp=apply(post_Y_0_imp,1,mean, na.rm=TRUE), 
-    post_Y_1_imp=apply(post_Y_1_imp,1,mean, na.rm=TRUE)
+    post_Y_1_imp=apply(post_Y_1_imp,1,mean, na.rm=TRUE),
+    post_P_0_all=post_P_0,
+    post_P_1_all=post_P_1,
+    post_Y_0_all=post_Y_0_imp,
+    post_Y_1_all=post_Y_1_imp
   ))
 }
 
@@ -960,9 +968,9 @@ Gibbs_CASDMM_cov_constrains<-function(c,matrix_X,T_var,P_obs,Y_obs){
     #tab=cbind(WG)
     #Binder=partition.BNPdens(list(clust=part),dist = "Binder")$partitions[1,]
     #tab=cbind(Binder)
-    mode=apply(part,2, table)
-    tab=apply(mode, 2, function(i) names(which.max(i)))
-    dimnames(tab)=NULL
+    mode_table=apply(part,2, table)
+    tab=sapply(mode_table, function(i) names(which.max(i)))
+    tab <- as.numeric(tab)
     return(list(tab=tab,part=part))
     
   }
@@ -1273,7 +1281,11 @@ Gibbs_CASDMM_cov_constrains<-function(c,matrix_X,T_var,P_obs,Y_obs){
     post_P_0_imp=apply(post_P_0,1,mean, na.rm=TRUE), 
     post_P_1_imp=apply(post_P_1,1,mean, na.rm=TRUE),
     post_Y_0_imp=apply(post_Y_0_imp,1,mean, na.rm=TRUE), 
-    post_Y_1_imp=apply(post_Y_1_imp,1,mean, na.rm=TRUE)
+    post_Y_1_imp=apply(post_Y_1_imp,1,mean, na.rm=TRUE),
+    post_P_0_all=post_P_0,
+    post_P_1_all=post_P_1,
+    post_Y_0_all=post_Y_0_imp,
+    post_Y_1_all=post_Y_1_imp
   ))
 }
 
@@ -1387,9 +1399,9 @@ Gibbs_CASDMM_cov_P0<-function(c,matrix_X,T_var,P_obs,Y_obs){
     #tab=cbind(WG)
     #Binder=partition.BNPdens(list(clust=part),dist = "Binder")$partitions[1,]
     #tab=cbind(Binder)
-    mode=apply(part,2, table)
-    tab=apply(mode, 2, function(i) names(which.max(i)))
-    dimnames(tab)=NULL
+    mode_table=apply(part,2, table)
+    tab=sapply(mode_table, function(i) names(which.max(i)))
+    tab <- as.numeric(tab)
     return(list(tab=tab,part=part))
     
   }
@@ -1700,7 +1712,11 @@ Gibbs_CASDMM_cov_P0<-function(c,matrix_X,T_var,P_obs,Y_obs){
     post_P_0_imp=apply(post_P_0,1,mean, na.rm=TRUE), 
     post_P_1_imp=apply(post_P_1,1,mean, na.rm=TRUE),
     post_Y_0_imp=apply(post_Y_0_imp,1,mean, na.rm=TRUE), 
-    post_Y_1_imp=apply(post_Y_1_imp,1,mean, na.rm=TRUE)
+    post_Y_1_imp=apply(post_Y_1_imp,1,mean, na.rm=TRUE),
+    post_P_0_all=post_P_0,
+    post_P_1_all=post_P_1,
+    post_Y_0_all=post_Y_0_imp,
+    post_Y_1_all=post_Y_1_imp
   ))
 }
 
@@ -1816,9 +1832,9 @@ Gibbs_CASDMM_cov_conf<-function(c,matrix_X,T_var,P_obs,Y_obs, matrix_COV){
     #tab=cbind(WG)
     #Binder=partition.BNPdens(list(clust=part),dist = "Binder")$partitions[1,]
     #tab=cbind(Binder)
-    mode=apply(part,2, table)
-    tab=apply(mode, 2, function(i) names(which.max(i)))
-    dimnames(tab)=NULL
+    mode_table=apply(part,2, table)
+    tab=sapply(mode_table, function(i) names(which.max(i)))
+    tab <- as.numeric(tab)
     return(list(tab=tab,part=part))
     
   }
@@ -2134,7 +2150,11 @@ Gibbs_CASDMM_cov_conf<-function(c,matrix_X,T_var,P_obs,Y_obs, matrix_COV){
               post_P_0_imp=apply(post_P_0,1,mean, na.rm=TRUE), 
               post_P_1_imp=apply(post_P_1,1,mean, na.rm=TRUE),
               post_Y_0_imp=apply(post_Y_0_imp,1,mean, na.rm=TRUE), 
-              post_Y_1_imp=apply(post_Y_1_imp,1,mean, na.rm=TRUE)
+              post_Y_1_imp=apply(post_Y_1_imp,1,mean, na.rm=TRUE),
+              post_P_0_all=post_P_0,
+              post_P_1_all=post_P_1,
+              post_Y_0_all=post_Y_0_imp,
+              post_Y_1_all=post_Y_1_imp
   ))
 }
 
@@ -2249,9 +2269,9 @@ Gibbs_CASDMM_cov_conf_P0<-function(c,matrix_X,T_var,P_obs,Y_obs, matrix_COV){
     #tab=cbind(WG)
     #Binder=partition.BNPdens(list(clust=part),dist = "Binder")$partitions[1,]
     #tab=cbind(Binder)
-    mode=apply(part,2, table)
-    tab=sapply(mode, function(i) names(which.max(i)))
-    dimnames(tab)=NULL
+    mode_table=apply(part,2, table)
+    tab=sapply(mode_table, function(i) names(which.max(i)))
+    tab <- as.numeric(tab)
     return(list(tab=tab,part=part))
     
   }
@@ -2581,7 +2601,11 @@ Gibbs_CASDMM_cov_conf_P0<-function(c,matrix_X,T_var,P_obs,Y_obs, matrix_COV){
               post_P_0_imp=apply(post_P_0,1,mean, na.rm=TRUE), 
               post_P_1_imp=apply(post_P_1,1,mean, na.rm=TRUE),
               post_Y_0_imp=apply(post_Y_0_imp,1,mean, na.rm=TRUE), 
-              post_Y_1_imp=apply(post_Y_1_imp,1,mean, na.rm=TRUE)
+              post_Y_1_imp=apply(post_Y_1_imp,1,mean, na.rm=TRUE),
+              post_P_0_all=post_P_0,
+              post_P_1_all=post_P_1,
+              post_Y_0_all=post_Y_0_imp,
+              post_Y_1_all=post_Y_1_imp
   ))
 }
 

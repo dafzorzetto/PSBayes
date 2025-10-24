@@ -24,8 +24,8 @@ library(fmsb)
 ###################################################################
 
 # iterations
-R=6000 
-R_burnin=3500   
+R=15000 
+R_burnin=10000   
 
 # max number clusters
 n_cluster=12  
@@ -79,4 +79,6 @@ system.time(results_CASBAH_P_all_Y_all <- Gibbs_CASDMM_cov(1,matrix_COV,T_var,P_
 system.time(results_CASBAH_P_all_Y_all_constrainsP <- Gibbs_CASDMM_cov_P0(1,matrix_COV,T_var,P_obs,Y_obs))
 
 save(results,file="results_application.RData")
+
+results <- results_CASBAH_P_all_Y_all_constrainsP
 
