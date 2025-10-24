@@ -75,10 +75,8 @@ T_var=dataset_all$a
 P_obs=dataset_all$pm_diff
 Y_obs=dataset_all$all_causes_ADJ
 
-system.time(results_CASBAH_P_all_Y_all <- Gibbs_CASDMM_cov(1,matrix_COV,T_var,P_obs,Y_obs))
-system.time(results_CASBAH_P_all_Y_all_constrainsP <- Gibbs_CASDMM_cov_P0(1,matrix_COV,T_var,P_obs,Y_obs))
+results <- Gibbs_CASDMM_cov_P0(1,matrix_COV,T_var,P_obs,Y_obs)
 
 save(results,file="results_application.RData")
 
-results <- results_CASBAH_P_all_Y_all_constrainsP
 
