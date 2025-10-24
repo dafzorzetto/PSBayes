@@ -41,71 +41,6 @@ IQR(data_frame$P[data_frame$cl=="-1"])
 IQR(data_frame$P[data_frame$cl=="0"])
 IQR(data_frame$P[data_frame$cl=="1"])
 
-#pdf(file="dati_P.pdf",width=9, height=6)
-ggplot(data_frame, aes(x=P, y=cl, fill=cl)) + 
-  scale_fill_manual(values=cbPalette, name="")+
-  geom_boxplot()+
-  geom_vline(xintercept = 0, col="#00ace6", size=1) +
-  theme(legend.position = "none",
-        panel.background = element_rect(fill='white'),
-        plot.background = element_rect(fill ="white"),
-        #panel.grid.minor = element_line(color = "grey"),
-        axis.title = element_text(size=16),
-        #legend.text=element_text(size=14),
-        plot.title = element_text(hjust = 0.5),
-        title =element_text(size=20),
-        #legend.background = element_rect(fill='transparent'),
-        #panel.grid.major = element_line(color = "grey",size = 0.45)
-        axis.text.y = element_text(size=14),
-  )+
-  #geom_hline(yintercept = vero, color = "#0BC2CF", size=0.65)+
-  ylab("") +
-  xlab(" ") +
-  ggtitle(expression(paste("E [ ", P[i](1)-P[i](0), " | stratum ]")))
-#dev.off()
-
-data_frame=as.data.frame(cbind(P=results$post_Y_1_imp-results$post_Y_0_imp,
-                               cl=results$S_strata_cluster))
-data_frame$P=as.numeric(data_frame$P)
-data_frame$cl=factor(data_frame$cl)
-data_frame$P[which(data_frame$P<(-100))]<-0
-data_frame$P[which(data_frame$P>(100))]<-0
-
-#quantiles
-quantile(data_frame$P[data_frame$cl=="-1"], prob=c(0.05,0.25,0.5,0.75,0.95))
-quantile(data_frame$P[data_frame$cl=="0"], prob=c(0.05,0.25,0.5,0.75,0.95))
-quantile(data_frame$P[data_frame$cl=="1"], prob=c(0.05,0.25,0.5,0.75,0.95))
-
-IQR(data_frame$P[data_frame$cl=="-1"])
-IQR(data_frame$P[data_frame$cl=="0"])
-IQR(data_frame$P[data_frame$cl=="1"])
-
-
-#pdf(file="dati_Y.pdf",width=9, height=6)
-ggplot(data_frame, aes(x=P, y=cl, fill=cl)) + 
-  scale_fill_manual(values=cbPalette, name="")+
-  geom_boxplot()+
-  geom_vline(xintercept = 0, col="#00ace6", size=1) +
-  theme(legend.position = "none",
-        panel.background = element_rect(fill='white'),
-        plot.background = element_rect(fill ="white"),
-        #panel.grid.minor = element_line(color = "grey"),
-        axis.title = element_text(size=16),
-        #legend.text=element_text(size=14),
-        plot.title = element_text(hjust = 0.5),
-        title =element_text(size=20),
-        #legend.background = element_rect(fill='transparent'),
-        #panel.grid.major = element_line(color = "grey",size = 0.45)
-        axis.text.y = element_text(size=14),
-  )+
-  #geom_hline(yintercept = vero, color = "#0BC2CF", size=0.65)+
-  ylab("") +
-  xlab(" ") +
-  #coord_cartesian(xlim = c(-2, 0.5)) +
-  ggtitle(expression(paste("E [ ", Y[i](1)-Y[i](0), " | stratum ]")))
-#dev.off()
-
-
 ##############################################################
 # ---    spiderplot ----
 ##############################################################
@@ -138,22 +73,22 @@ for(cl in 1:3){
 #################################################################
 CE_Y <- results$all_Y1-results$all_Y0
 
-PCE_Y_chains2 <- t(sapply(1:5000, function(r)
+PCE_Y_chains <- t(sapply(1:5000, function(r)
   sapply(c(-1,0,1), function(v) 
     median(CE_Y[which(results$chians_strata[r,]==v),r]))))
 
-CE_median = apply(PCE_Y_chains2,2,median)
-CE_mean =apply(PCE_Y_chains2,2,mean)
-CE_quanitles =apply(PCE_Y_chains2,2,quantile, prob=c(0.025,0.05,0.95,0.975))
+CE_median = apply(PCE_Y_chains,2,median)
+CE_mean =apply(PCE_Y_chains,2,mean)
+CE_quanitles =apply(PCE_Y_chains,2,quantile, prob=c(0.025,0.05,0.95,0.975))
 
 par(mfrow=c(3,1))
-plot(PCE_Y_chains2[,1], type = "l") #, ylim=c(-lim_val,lim_val))
+plot(PCE_Y_chains[,1], type = "l") 
 abline(h=c(CE_quanitles[2,1],CE_quanitles[3,1]), col=2)
 abline(h=0, col=3)
-plot(PCE_Y_chains2[,2], type = "l") #, ylim=c(-lim_val,lim_val))
+plot(PCE_Y_chains[,2], type = "l") 
 abline(h=c(CE_quanitles[2,2],CE_quanitles[3,2]), col=2)
 abline(h=0, col=3)
-plot(PCE_Y_chains2[,3], type = "l") #, ylim=c(-lim_val,lim_val))
+plot(PCE_Y_chains[,3], type = "l") 
 abline(h=c(CE_quanitles[2,3],CE_quanitles[3,3]), col=2)
 abline(h=0, col=3)
 
@@ -177,23 +112,23 @@ text(-40, 0.8, labels = "associative \n positive", pos = 3, cex = 0.8, col = "bl
 
 ce_P <- results$post_P_1_imp - results$post_P_0_imp
 
-CE_P_median = sapply(c("-1","0","1"),function(c) 
-  median(ce_P[which(results$S_strata_cluster==c)]))
-CE_P_mean = sapply(c("-1","0","1"),function(c) 
-  mean(ce_P[which(results$S_strata_cluster==c)]))
-CE_P_quanitles = sapply(c("-1","0","1"),function(c) 
-  quantile(ce_P[which(results$S_strata_cluster==c)], prob=c(0.025,0.05,0.95,0.975)))
+#CE_P_median = sapply(c("-1","0","1"),function(c) 
+#  median(ce_P[which(results$S_strata_cluster==c)]))
+#CE_P_mean = sapply(c("-1","0","1"),function(c) 
+#  mean(ce_P[which(results$S_strata_cluster==c)]))
+#CE_P_quanitles = sapply(c("-1","0","1"),function(c) 
+#  quantile(ce_P[which(results$S_strata_cluster==c)], prob=c(0.025,0.05,0.95,0.975)))
 
 augmented_ce_P <- sapply(1:5000, function(c)
   sapply(c("-1","0","1"), function(v) 
     median(ce_P[which(results$chians_strata[c,]==v)])))
 
 par(mfrow=c(3,1))
-plot(augmented_ce_P[1,], type = "l") #, ylim=c(-lim_val,lim_val))
+plot(augmented_ce_P[1,], type = "l") 
 abline(h=0, col=2)
-plot(augmented_ce_P[2,], type = "l") #, ylim=c(-lim_val,lim_val))
+plot(augmented_ce_P[2,], type = "l") 
 abline(h=0, col=2)
-plot(augmented_ce_P[3,], type = "l") #, ylim=c(-lim_val,lim_val))
+plot(augmented_ce_P[3,], type = "l") 
 abline(h=0, col=2)
 
 CE_Pa_median = apply(augmented_ce_P[,1:5000],1,median)
@@ -216,35 +151,3 @@ text(-1.85, 0, labels = "dissociative", pos = 3, cex = 0.8, col = "black")
 text(-1.85, 0.8, labels = "associative \n positive", pos = 3, cex = 0.8, col = "black")
 
 
-PCE_P_mean <- sapply(c("-1","0","1"),function(c) 
-  mean(ce_P[which(results$S_strata_cluster==c)]))
-PCE_P_quantiles <- sapply(c("-1","0","1"),function(c) 
-  quantile(ce_P[which(results$S_strata_cluster==c)], prob=c(0.025,0.05,0.95,0.975,0.25,0.75,0.5)))
-
-par(mfrow=c(1,1))
-plot(0,0, type = "n", frame.plot = FALSE, axes = FALSE,
-     ylim = c(-1, 1), xlim = c(-1.5, 1), xlab = " ", ylab = " ")
-points(PCE_P_mean, c(-1,0,1), 
-       col=cbPalette, pch=16, cex=2)
-segments(PCE_P_quantiles[2,1],-1,PCE_P_quantiles[3,1],-1, col=cbPalette[1], lwd = 3)
-segments(PCE_P_quantiles[2,2],0,PCE_P_quantiles[3,2],0, col=cbPalette[2], lwd = 3)
-segments(PCE_P_quantiles[2,3],1,PCE_P_quantiles[3,3],1, col=cbPalette[3], lwd = 3)
-abline(v=0, col="#00ace6")
-axis(1, at = seq(-1, 1, by = 0.2))
-text(-1.35, -1.1, labels = "associative \n negative", pos = 3, cex = 0.8, col = "black")
-text(-1.35, 0, labels = "dissociative", pos = 3, cex = 0.8, col = "black")
-text(-1.35, 0.8, labels = "associative \n positive", pos = 3, cex = 0.8, col = "black")
-
-par(mfrow=c(1,1))
-plot(0,0, type = "n", frame.plot = FALSE, axes = FALSE,
-     ylim = c(-1, 1), xlim = c(-2.5, 1.5), xlab = " ", ylab = " ")
-points(PCE_P_mean, c(-1,0,1), 
-       col=cbPalette, pch=16, cex=2)
-segments(PCE_P_quantiles[5,1],-1,PCE_P_quantiles[6,1],-1, col=cbPalette[1], lwd = 3)
-segments(PCE_P_quantiles[5,2],0,PCE_P_quantiles[6,2],0, col=cbPalette[2], lwd = 3)
-segments(PCE_P_quantiles[5,3],1,PCE_P_quantiles[6,3],1, col=cbPalette[3], lwd = 3)
-abline(v=0, col="#00ace6")
-axis(1, at = seq(-1.5, 1.5, by = 0.5))
-text(-2.35, -1.1, labels = "associative \n negative", pos = 3, cex = 0.8, col = "black")
-text(-2.35, 0, labels = "dissociative", pos = 3, cex = 0.8, col = "black")
-text(-2.35, 0.8, labels = "associative \n positive", pos = 3, cex = 0.8, col = "black")
